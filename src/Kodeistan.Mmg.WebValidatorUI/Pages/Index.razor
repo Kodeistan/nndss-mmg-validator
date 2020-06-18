@@ -1,0 +1,91 @@
+﻿@page "/"
+
+<h1>Message Validator</h1>
+
+<p>
+    This app is designed to validate NNDSS HL7 v2.5.1 messages against messaging, vocabulary, and programmatic standards.
+</p>
+
+<EditForm Model="@messageFormResponse" OnValidSubmit="Validate">
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="hl7message">Message content:</label>
+
+        <InputTextArea class="form-control"
+                       id="hl7message"
+                       style="font-family: monospace; font-size: 0.8em;" rows="20"
+                       @bind-Value="messageFormResponse.Content">
+
+        </InputTextArea>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Validate</button>
+
+</EditForm>
+
+@if (hasRun)
+{
+    <div style="margin-top: 20px;"></div>
+
+    <ul style="font-size: 0.8em">
+        <li>Validation CPU time: @validationResult.Elapsed.TotalMilliseconds.ToString("N0") ms</li>
+        <li>Profile: @validationResult.Profile</li>
+        <li>Local record ID: @validationResult.LocalRecordId</li>
+        <li>Date/time of this validation: @validationResult.Created</li>
+    </ul>
+
+    <table class="table table-sm" style="font-size: 0.8em">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Severity</th>
+                <th scope="col">Path</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < validationResult.ValidationMessages.Count; i++)
+            {
+                var message = validationResult.ValidationMessages[i];
+
+                var trClass = "table-danger";
+
+                if (message.Severity == Model.Severity.Error)
+                {
+                    trClass = "table-danger";
+                }
+                else if (message.Severity == Model.Severity.Warning)
+                {
+                    trClass = "table-warning";
+                }
+
+                <tr class="@trClass">
+                    <th scope="row">@(i+1)</th>
+                    <td>@message.Severity</td>
+                    <td>@message.Path</td>
+                    <td>@message.Content</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;"></div>
+}
+
+@code {
+
+    private readonly Kodeistan.Mmg.Validator _validator = new Kodeistan.Mmg.Validator(new Kodeistan.Mmg.Services.FakeVocabularyService(), new Kodeistan.Mmg.Services.InMemoryMmgService());
+
+    private MessageForm messageFormResponse = new MessageForm();
+    private Kodeistan.Mmg.Model.ValidationResult validationResult = new Model.ValidationResult();
+    private bool hasRun = false;
+
+    private void Validate()
+    {
+        validationResult = _validator.ValidateMessage(messageFormResponse.Content);
+        hasRun = true;
+    }
+}

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Erik Knudsen</Authors>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Authors>Erik Knudsen</Authors>
+    <Owners>eknudsen</Owners>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Company />
+    <Title>MMG Validator</Title>
+    <Description>A simple library for validating HL7 v2.5.1 messages against message mapping guides.</Description>
+    <PackageDescription>A simple library for validating HL7 v2.5.1 messages against message mapping guides.</PackageDescription>
+    <Copyright>Copyright © 2020 Erik Knudsen</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageTags>hl7v2 surveillance</PackageTags>
+    <PackageProjectUrl>https://github.com/kodeistan</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageVersion>0.0.2</PackageVersion>
+    <Version>0.0.2</Version>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HL7-dotnetcore" Version="2.18.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>
