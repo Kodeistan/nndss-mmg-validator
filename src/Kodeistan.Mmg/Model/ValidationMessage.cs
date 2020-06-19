@@ -22,6 +22,8 @@ namespace Kodeistan.Mmg.Model
 
         public string Path { get; set; } = string.Empty;
 
+        public string PathAlternate { get; set; } = string.Empty;
+
         public ValidationMessage() {}
 
         public ValidationMessage(Exception exception)
@@ -37,6 +39,12 @@ namespace Kodeistan.Mmg.Model
             MessageType = messageType;
             Path = path;
             Content = content;
+        }
+
+        public ValidationMessage(Severity severity, ValidationMessageType messageType, string content, string path, string pathAlternate)
+            : this(severity, messageType, content, path)
+        {
+            PathAlternate = pathAlternate;
         }
     }
 }

@@ -72,6 +72,31 @@ namespace Kodeistan.Mmg.Services
             new Tuple<string, string, string>( "PHC1274", "Yes imported, but not able to determine source state and/or country", "CDC" ),
         };
 
+        private static List<Tuple<string, string, string>> CaseClassStatus = new List<Tuple<string, string, string>>() {
+            new Tuple<string, string, string>( "410605003", "Confirmed present", "CDC" ),
+            new Tuple<string, string, string>( "PHC178", "Not a Case", "CDC" ),
+            new Tuple<string, string, string>( "2931005", "Probable diagnosis", "CDC" ),
+            new Tuple<string, string, string>( "415684004", "Suspected", "CDC" ),
+            new Tuple<string, string, string>( "UNK", "Unknown", "NULLFL" ),
+        };
+
+        private static List<Tuple<string, string, string>> CaseTransmissionMode = new List<Tuple<string, string, string>>() {
+            new Tuple<string, string, string>( "416380006", "Airborne transmission", "CDC" ),
+            new Tuple<string, string, string>( "409700000", "Animal to human transmission", "CDC" ),
+            new Tuple<string, string, string>( "420014008", "Blood borne transmission", "CDC" ),
+            new Tuple<string, string, string>( "461551000124100", "Droplet transmission", "CDC" ),
+            new Tuple<string, string, string>( "416086007", "Food-borne transmission", "CDC" ),
+            new Tuple<string, string, string>( "418375005", "Indeterminate disease transmission mode", "CDC" ),
+            new Tuple<string, string, string>( "PHC142", "Mechanical", "CDC" ),
+            new Tuple<string, string, string>( "416085006", "Nosocomial transmission", "CDC" ),
+            new Tuple<string, string, string>( "OTH", "Other", "NULLFL" ),
+            new Tuple<string, string, string>( "417564009", "Sexual transmission", "CDC" ),
+            new Tuple<string, string, string>( "420193003", "Transdermal transmission", "CDC" ),
+            new Tuple<string, string, string>( "417409004", "Transplacental transmission", "CDC" ),
+            new Tuple<string, string, string>( "418427004", "Vector-borne transmission", "CDC" ),
+            new Tuple<string, string, string>( "418117003", "Water-borne transmission", "CDC" )
+        };
+
         public bool IsConceptCodeValid(string conceptCode, string conceptName, string conceptCodeSystem, string valueSetCode)
         {
             List<Tuple<string, string, string>> valueSet = new List<Tuple<string, string, string>>();
@@ -103,6 +128,14 @@ namespace Kodeistan.Mmg.Services
             else if (valueSetCode.Equals("PHVS_DiseaseAcquiredJurisdiction_NND"))
             {
                 valueSet = DiseaseAcquiredJurisdiction;
+            }
+            else if (valueSetCode.Equals("PHVS_CaseClassStatus_NND"))
+            {
+                valueSet = CaseClassStatus;
+            }
+            else if (valueSetCode.Equals("PHVS_CaseTransmissionMode_NND"))
+            {
+                valueSet = CaseTransmissionMode;
             }
             else
             {

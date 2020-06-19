@@ -12,11 +12,14 @@
     <ValidationSummary />
 
     <div class="form-group">
-        <label for="hl7message">Message content:</label>
+        <label for="hl7message">HL7 v2.5.1 (ORU_R01) message to validate:</label>
 
-        <InputTextArea class="form-control"
+        <InputTextArea spellcheck="false"
+                       class="form-control"
                        id="hl7message"
-                       style="font-family: monospace; font-size: 0.8em;" rows="20"
+                       style="font-family: 'Roboto Mono', monospace;"
+                       rows="20"
+                       cols="80"
                        @bind-Value="messageFormResponse.Content">
 
         </InputTextArea>
@@ -30,19 +33,47 @@
 {
     <div style="margin-top: 20px;"></div>
 
-    <ul style="font-size: 0.8em">
+    string divClass = "alert alert-success";
+
+    if (validationResult.IsSuccess == false)
+    {
+        divClass = "alert alert-danger";
+    }
+    else
+    {
+        
+    }
+
+<div class="@divClass" role="alert">
+
+    @if (validationResult.IsSuccess)
+    {
+        <p><span class="oi oi-check" aria-hidden="true"></span> Passed validation with @validationResult.Warnings.ToString() warning(s)</p>
+    }
+    else
+    {
+        <p><span class="oi oi-x" aria-hidden="true"></span> Failed validation with @validationResult.Errors.ToString() error(s)</p>
+    }
+
+    <hr />
+    <ul>
         <li>Validation CPU time: @validationResult.Elapsed.TotalMilliseconds.ToString("N0") ms</li>
         <li>Profile: @validationResult.Profile</li>
+        <li>Condition: @validationResult.Condition (@validationResult.ConditionCode)</li>
+        <li>Reporting jurisdiction: @validationResult.NationalReportingJurisdiction</li>
         <li>Local record ID: @validationResult.LocalRecordId</li>
-        <li>Date/time of this validation: @validationResult.Created</li>
+        <li>Date/time of this validation: @validationResult.Created.ToString("yyyy-MM-dd h:mm tt")</li>
+        <li>Date/time of message transmission: @validationResult.MessageCreated.ToString("yyyy-MM-dd h:mm tt")</li>
     </ul>
+</div>
 
-    <table class="table table-sm" style="font-size: 0.8em">
+    <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Severity</th>
-                <th scope="col">Path</th>
+                <th scope="col">Location 1</th>
+                <th scope="col">Location 2</th>
                 <th scope="col">Content</th>
             </tr>
         </thead>
@@ -62,12 +93,26 @@
                     trClass = "table-warning";
                 }
 
-                <tr class="@trClass">
-                    <th scope="row">@(i+1)</th>
-                    <td>@message.Severity</td>
-                    <td>@message.Path</td>
-                    <td>@message.Content</td>
-                </tr>
+            <tr class="@trClass">
+                <th scope="row">@(i+1)</th>
+                <td>
+                    @if (message.Severity == Model.Severity.Warning)
+                    {
+                        <span class="oi oi-warning text-warning"></span>
+                    }
+
+                    @if (message.Severity == Model.Severity.Error)
+                    {
+                        <span class="oi oi-circle-x text-danger"></span>
+                    }
+
+                    @message.Severity
+
+                </td>
+                <td>@message.Path</td>
+                <td>@message.PathAlternate</td>
+                <td>@message.Content</td>
+            </tr>
             }
         </tbody>
     </table>

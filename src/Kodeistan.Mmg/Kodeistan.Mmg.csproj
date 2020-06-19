@@ -18,8 +18,8 @@
     <PackageTags>hl7v2 surveillance</PackageTags>
     <PackageProjectUrl>https://github.com/kodeistan</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageVersion>0.0.2</PackageVersion>
-    <Version>0.0.2</Version>
+    <PackageVersion>0.0.3</PackageVersion>
+    <Version>0.0.3</Version>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

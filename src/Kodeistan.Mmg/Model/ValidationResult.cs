@@ -13,9 +13,17 @@ namespace Kodeistan.Mmg.Model
 
         public DateTimeOffset Created { get; set; } = DateTimeOffset.Now;
 
+        public DateTimeOffset MessageCreated { get; set; } = DateTimeOffset.MinValue;
+
         public string Profile { get; set; } = string.Empty;
 
         public string LocalRecordId { get; set; } = string.Empty;
+
+        public string Condition { get; set; } = string.Empty;
+
+        public string ConditionCode { get; set; } = string.Empty;
+
+        public string NationalReportingJurisdiction { get; set; } = string.Empty;
 
         public bool IsSuccess
         {

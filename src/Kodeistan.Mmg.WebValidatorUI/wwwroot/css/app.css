@@ -1,7 +1,18 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+@font-face {
+    font-family: "Open Sans";
+    src: url('fonts/open-sans/opensans-regular-webfont.woff2') format('woff2'), url('fonts/open-sans/opensans-regular-webfont.woff') format('woff'), url('fonts/open-sans/OpenSans-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url('fonts/roboto-mono/robotomono-variablefont_wght-webfont.woff2') format('woff2'), url('fonts/roboto-mono/robotomono-variablefont_wght-webfont.woff') format('woff'), url('fonts/roboto-mono/RobotoMono-VariableFont_wght.ttf') format('truetype')
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans',-apple-system,BlinkMacSystemFont,Roboto,"Segoe UI","Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 0.875rem;
 }
 
 a, .btn-link {

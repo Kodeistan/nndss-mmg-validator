@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using HL7.Dotnetcore;
@@ -85,12 +86,22 @@ namespace Kodeistan.Mmg
                         Severity.Error,
                         ValidationMessageType.Structural,
                         $"MSH segment contains no profile identifier", 
-                        $"MSH[21]"));
+                        $"MSH[1].21"));
 
                 result.ValidationMessages = validationMessages;
                 result.Elapsed = sw.Elapsed;
 
                 return result;
+            }
+
+            string dateTimeOfMessageString = mshSegment.Fields(7).Value.Substring(0, 14);
+            if (DateTime.TryParseExact(dateTimeOfMessageString,
+                       "yyyyMMddhhmmss",
+                       CultureInfo.InvariantCulture,
+                       DateTimeStyles.None,
+                       out DateTime dt))
+            {
+                result.MessageCreated = dt;
             }
 
             MessageMappingGuide messageMappingGuide = _mmgService.Get(mshSegment.Fields(21).Value);
@@ -100,14 +111,14 @@ namespace Kodeistan.Mmg
             // we need to keep track of these values after validation for debugging and other purposes, so let's just go ahead and fill the data values in right now
             result.Profile = mshSegment.Fields(21).Repetitions().Last().Components(1).SubComponents(1).Value;
 
-            var pidSegment = message.Segments("PID").FirstOrDefault();
-            if (pidSegment == null)
+            var obrSegment = message.Segments("OBR").FirstOrDefault();
+            if (obrSegment == null)
             {
                 validationMessages.Add(
                     new ValidationMessage(
                         Severity.Error,
                         ValidationMessageType.Structural, 
-                        $"PID segment was not found",
+                        $"OBR segment was not found",
                         $""));
 
                 result.ValidationMessages = validationMessages;
@@ -117,7 +128,18 @@ namespace Kodeistan.Mmg
             }
             else
             {
-                result.LocalRecordId = pidSegment.Fields(3).Components(1).Value;
+                result.LocalRecordId = obrSegment.Fields(3).Components(1).Value;
+            }
+            #endregion
+
+            #region Get the condition code and national reporting jurisdiction
+            result.Condition = obrSegment.Fields(31).Components(2).Value;
+            result.ConditionCode = obrSegment.Fields(31).Components(1).Value;
+            result.NationalReportingJurisdiction = string.Empty;
+            var reportingJurisdictionSegment = message.Segments("OBX").Where(s => s.Fields(3).Value.StartsWith("77968-6")).FirstOrDefault();
+            if (reportingJurisdictionSegment != null)
+            {
+                result.NationalReportingJurisdiction = reportingJurisdictionSegment.Fields(5).Components(2).Value;
             }
             #endregion
 
@@ -209,7 +231,7 @@ namespace Kodeistan.Mmg
                                 Severity.Error,
                                 ValidationMessageType.Content, 
                                 $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is required, but was not found in the message",
-                                $"OBX[{relatedSegment.Fields(1).Value}][{pos}]"));
+                                $"OBX[{relatedSegment.Fields(1).Value}].{pos}"));
                         }
 
                         break;
@@ -249,7 +271,7 @@ namespace Kodeistan.Mmg
                         Severity.Warning,
                         ValidationMessageType.Structural,
                         $"Data was found in an OBX segment with identifier '{identifier}', but no data elements corresponding with this identifier were found in the '{messageMappingGuide.Name}' message mapping guide.",
-                        $"OBX[{segment.Fields(1).Value}][3]"));
+                        $"OBX[{segment.Fields(1).Value}].3"));
                 }
             }
 
@@ -355,10 +377,11 @@ namespace Kodeistan.Mmg
                                 if (!found)
                                 {
                                     ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
-                                        Severity.Error,
-                                        ValidationMessageType.Structural,
-                                        $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{relatedElement.ValueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
-                                        $"OBX[{segment.Fields(1).Value}][{relatedElement.Mappings.Hl7v251.FieldPosition.Value}][1]");
+                                        severity: Severity.Warning,
+                                        messageType: ValidationMessageType.Structural,
+                                        content: $"Data element '{relatedElement.Name}' in with identifier '{relatedElement.Mappings.Hl7v251.Identifier}' is a coded element associated with the value set '{relatedElement.ValueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
+                                        path: $"OBX[{segment.Fields(1).Value}].{relatedElement.Mappings.Hl7v251.FieldPosition.Value}",
+                                        pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                                     validationMessages.Add(illegalConceptCodeMessage);
                                 }
@@ -373,10 +396,11 @@ namespace Kodeistan.Mmg
                     {
                         // element is defined as not repeating, but has repeats in a message
                         ValidationMessage illegalRepeatsMessage = new ValidationMessage(
-                            Severity.Error,
-                            ValidationMessageType.Structural,
-                            $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is not a repeating element, but has repeating data in the message",
-                            $"OBX[{segment.Fields(1).Value}][3]");
+                            severity: Severity.Error,
+                            messageType: ValidationMessageType.Structural,
+                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is not a repeating element, but has repeating data in the message",
+                            path: $"OBX[{segment.Fields(1).Value}].5",
+                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                         validationMessages.Add(illegalRepeatsMessage);
                     }
@@ -400,10 +424,11 @@ namespace Kodeistan.Mmg
                                 if (!found)
                                 {
                                     ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
-                                        Severity.Error,
-                                        ValidationMessageType.Vocabulary,
-                                        $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set in repetition {i + 1}",
-                                        $"OBX[{segment.Fields(1).Value}][5][{i + 1}][1]");
+                                        severity: Severity.Warning,
+                                        messageType: ValidationMessageType.Vocabulary,
+                                        content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set in repetition {i + 1}",
+                                        path: $"OBX[{segment.Fields(1).Value}].5[{i + 1}]",
+                                        pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                                     validationMessages.Add(illegalConceptCodeMessage);
                                 }
@@ -420,10 +445,11 @@ namespace Kodeistan.Mmg
                             if (!found)
                             {
                                 ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
-                                    Severity.Error,
-                                    ValidationMessageType.Vocabulary,
-                                    $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
-                                    $"OBX[{segment.Fields(1).Value}][5][1]");
+                                    severity: Severity.Warning,
+                                    messageType: ValidationMessageType.Vocabulary,
+                                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
+                                    path: $"OBX[{segment.Fields(1).Value}].5",
+                                    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                                 validationMessages.Add(illegalConceptCodeMessage);
                             }
@@ -460,10 +486,11 @@ namespace Kodeistan.Mmg
             if (mismatch)
             {
                 var validationMessage = new ValidationMessage(
-                    Severity.Warning,
-                    ValidationMessageType.Structural,
-                    $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is specified as type {mapping.DataType}, but appears in the HL7 message as type {segment.Fields(2).Value}",
-                    $"OBX[{segment.Fields(1).Value}][2]");
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Structural,
+                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is specified as type {mapping.DataType}, but appears in the HL7 message as type {segment.Fields(2).Value}",
+                    path: $"OBX[{segment.Fields(1).Value}].2",
+                    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                 validationMessages.Add(validationMessage);
             }
