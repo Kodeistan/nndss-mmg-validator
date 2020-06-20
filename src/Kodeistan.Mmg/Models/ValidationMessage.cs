@@ -14,6 +14,8 @@ namespace Kodeistan.Mmg.Model
         /// </summary>
         public Guid Id { get; private set; } = System.Guid.NewGuid();
 
+        public string ErrorCode { get; set; }
+
         public string Content { get; set; } = string.Empty;
 
         public Severity Severity { get; set; } = Severity.Information;
@@ -23,6 +25,10 @@ namespace Kodeistan.Mmg.Model
         public string Path { get; set; } = string.Empty;
 
         public string PathAlternate { get; set; } = string.Empty;
+
+        public string DataElementId { get; set; } = string.Empty;
+
+        public string ValueSetCode { get; set; } = string.Empty;
 
         public ValidationMessage() {}
 

@@ -142,7 +142,7 @@ namespace Kodeistan.Mmg.Services
                 // if it's not in our in-memory list, just skip it for now and assume it's valid
                 return new VocabularyValidationResult(
                     isCodeValid: true,
-                    isDescriptionValid: true,
+                    isNameValid: true,
                     isSystemValid: true);
             }
 
@@ -162,10 +162,16 @@ namespace Kodeistan.Mmg.Services
                 }
             }
 
-            return new VocabularyValidationResult(
-                isCodeValid: isCodeValid, 
-                isDescriptionValid: isDescriptionValid, 
+            var result = new VocabularyValidationResult(
+                isCodeValid: isCodeValid,
+                isNameValid: isDescriptionValid,
                 isSystemValid: true); // assume true for code system lookups until we can build an API
+
+            result.ConceptCode = conceptCode;
+            result.ConceptName = conceptName;
+            result.ConceptCodeSystem = conceptCodeSystem;
+
+            return result;
         }
     }
 }
