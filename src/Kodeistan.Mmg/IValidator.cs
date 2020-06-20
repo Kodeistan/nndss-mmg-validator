@@ -7,6 +7,6 @@ namespace Kodeistan.Mmg
 {
     public interface IValidator
     {
-        ValidationResult ValidateMessage(string hl7v2message, MessageMappingGuide messageMappingGuide);
+        ValidationResult ValidateMessage(string hl7v2message);
     }
 }

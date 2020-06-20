@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodeistan.Mmg", "src\Kodeis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodeistan.Mmg.WebValidatorUI", "src\Kodeistan.Mmg.WebValidatorUI\Kodeistan.Mmg.WebValidatorUI.csproj", "{8537C7A7-A24E-405A-A005-1D62C724B8F7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3C89E658-000C-4A62-9CD8-DF678067804C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodeistan.Mmg.Tests", "tests\Kodeistan.Mmg.Tests\Kodeistan.Mmg.Tests.csproj", "{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,9 +64,22 @@ Global
 		{8537C7A7-A24E-405A-A005-1D62C724B8F7}.Release|x64.Build.0 = Release|Any CPU
 		{8537C7A7-A24E-405A-A005-1D62C724B8F7}.Release|x86.ActiveCfg = Release|Any CPU
 		{8537C7A7-A24E-405A-A005-1D62C724B8F7}.Release|x86.Build.0 = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|x64.Build.0 = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Debug|x86.Build.0 = Debug|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|x64.ActiveCfg = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|x64.Build.0 = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|x86.ActiveCfg = Release|Any CPU
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{944F3C2B-66F1-4B97-8822-14C10C7465CA} = {A5E17E53-DE26-4A36-B35D-C732C30AED12}
 		{8537C7A7-A24E-405A-A005-1D62C724B8F7} = {A5E17E53-DE26-4A36-B35D-C732C30AED12}
+		{298DBBC9-47D6-40B3-BBE1-2BD9E21F272D} = {3C89E658-000C-4A62-9CD8-DF678067804C}
 	EndGlobalSection
 EndGlobal

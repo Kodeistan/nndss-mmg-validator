@@ -9,7 +9,7 @@ namespace Kodeistan.Mmg.Services
 {
     public class InMemoryMmgService : IMmgService
     {
-        public MessageMappingGuide Get(string profileIdentifier)
+        public MessageMappingGuide Get(string profileIdentifier, string conditionCode)
         {
             var sw = new System.Diagnostics.Stopwatch();
             sw.Start();

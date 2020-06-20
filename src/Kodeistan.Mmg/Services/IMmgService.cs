@@ -7,6 +7,6 @@ namespace Kodeistan.Mmg.Services
 {
     public interface IMmgService
     {
-        MessageMappingGuide Get(string profileIdentifier);
+        MessageMappingGuide Get(string profileIdentifier, string conditionCode);
     }
 }

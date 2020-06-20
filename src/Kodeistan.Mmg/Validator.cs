@@ -10,7 +10,7 @@ using Kodeistan.Mmg.Services;
 
 namespace Kodeistan.Mmg
 {
-    public class Validator
+    public class Validator : IValidator
     {
         private readonly IVocabularyService _vocabService;
         private readonly IMmgService _mmgService;
@@ -62,8 +62,7 @@ namespace Kodeistan.Mmg
             var segments = message.Segments();
             #endregion
 
-            #region Get MMG C# model object
-            // Get the correct MMG for this message based on the profile identifier
+            #region Fill in profile identifier and local record ID for the validation result C# object
             var mshSegment = message.Segments("MSH").FirstOrDefault();
             if (mshSegment == null)
             {
@@ -71,7 +70,7 @@ namespace Kodeistan.Mmg
                     new ValidationMessage(
                         Severity.Error,
                         ValidationMessageType.Structural,
-                        $"MSH segment was not found", 
+                        $"MSH segment was not found",
                         $""));
 
                 result.ValidationMessages = validationMessages;
@@ -85,7 +84,7 @@ namespace Kodeistan.Mmg
                     new ValidationMessage(
                         Severity.Error,
                         ValidationMessageType.Structural,
-                        $"MSH segment contains no profile identifier", 
+                        $"MSH segment contains no profile identifier",
                         $"MSH[1].21"));
 
                 result.ValidationMessages = validationMessages;
@@ -94,20 +93,6 @@ namespace Kodeistan.Mmg
                 return result;
             }
 
-            string dateTimeOfMessageString = mshSegment.Fields(7).Value.Substring(0, 14);
-            if (DateTime.TryParseExact(dateTimeOfMessageString,
-                       "yyyyMMddhhmmss",
-                       CultureInfo.InvariantCulture,
-                       DateTimeStyles.None,
-                       out DateTime dt))
-            {
-                result.MessageCreated = dt;
-            }
-
-            MessageMappingGuide messageMappingGuide = _mmgService.Get(mshSegment.Fields(21).Value);
-            #endregion
-
-            #region Fill in profile identifier and local record ID for the validation result C# object
             // we need to keep track of these values after validation for debugging and other purposes, so let's just go ahead and fill the data values in right now
             result.Profile = mshSegment.Fields(21).Repetitions().Last().Components(1).SubComponents(1).Value;
 
@@ -117,7 +102,7 @@ namespace Kodeistan.Mmg
                 validationMessages.Add(
                     new ValidationMessage(
                         Severity.Error,
-                        ValidationMessageType.Structural, 
+                        ValidationMessageType.Structural,
                         $"OBR segment was not found",
                         $""));
 
@@ -143,6 +128,21 @@ namespace Kodeistan.Mmg
             }
             #endregion
 
+            #region Get MMG C# model object
+            // Get the correct MMG for this message based on the profile identifier
+            string dateTimeOfMessageString = mshSegment.Fields(7).Value.Substring(0, 14);
+            if (DateTime.TryParseExact(dateTimeOfMessageString,
+                       "yyyyMMddhhmmss",
+                       CultureInfo.InvariantCulture,
+                       DateTimeStyles.None,
+                       out DateTime dt))
+            {
+                result.MessageCreated = dt;
+            }
+
+            MessageMappingGuide messageMappingGuide = _mmgService.Get(mshSegment.Fields(21).Value, result.ConditionCode);
+            #endregion
+
             #region Validate HL7v2 message content
             // check content
             foreach (var segment in segments)
@@ -152,6 +152,8 @@ namespace Kodeistan.Mmg
                     case "OBX":
                         var obxValidationMessages = ValidateOBX(segment, messageMappingGuide);
                         validationMessages.AddRange(obxValidationMessages);
+                        break;
+                    case "PID":
                         break;
                 }
             }

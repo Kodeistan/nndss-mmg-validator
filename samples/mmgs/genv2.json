@@ -1,0 +1,2969 @@
+{
+    "id": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+    "type": "Template",
+    "templateStatus": "L",
+    "name": "Generic Version 2",
+    "shortName": "",
+    "description": "Generic Version 2",
+    "isActive": true,
+    "createdBy": "0923a1db-7efa-44ea-aacf-d024adef043a",
+    "ownedBy": "59c5466d-99a9-4cd5-9db6-f150e6a945b9",
+    "internalVersion": 9,
+    "createdDate": "0001-01-01T00:00:00",
+    "lastUpdatedDate": "2019-12-13T19:12:13.317547+00:00",
+    "publishVersion": "1.0",
+    "publishDate": "2018-01-25T19:01:49.3904048+00:00",
+    "profileIdentifier": "Generic_MMG_V2.0^PHINMsgMapID^2.16.840.1.114222.4.10.4^ISO",
+    "blocks": [
+      {
+        "id": "5ba813c4-3c27-451d-83af-d8881953588a",
+        "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+        "ordinal": 1,
+        "type": "Single",
+        "name": "Message Header",
+        "startingDescription": "",
+        "endingDescription": "",
+        "shouldDisplayName": true,
+        "elements": [
+          {
+            "id": "2e8bec8d-942e-4c78-affb-f5fe720f068c",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "5ba813c4-3c27-451d-83af-d8881953588a",
+            "ordinal": 1,
+            "name": "Message Profile Identifier",
+            "description": "Message Profile Identifiers provide a literal value to use for the references in MSH-21. MSH-21 will always contain a reference to the notification type in the \"PHINProfileID\" namespace and a reference to the implemented version of the Generic MMG in the \"PHINMsgMapID\" namespace. For conditions that have a condition-specific MMG, MSH-21 will also contain a reference to that MMG that is also in the \"PHINMsgMapID\" namespace.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": true,
+            "repetitions": 2,
+            "mayRepeat": "Y/2",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT115",
+                "identifier": "N/A: MSH-21",
+                "messageContext": "MSH-21 Message Profile ID",
+                "dataType": "EI",
+                "segmentType": "MSH",
+                "obrPosition": 1,
+                "fieldPosition": 21,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[2..2]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "CONFORMANCE STATEMENT: Message Profile ID (MSH-21) for this version of the MMG SHALL contain the literal value: 'NOTF_ORU_v3.0^PHINProfileID^2.16.840.1.114222.4.10.3^ISO~Generic_MMG_V2.0^PHINMsgMapID^2.16.840.1.114222.4.10.4^ISO'\n\nRefer to Conformance Statement CN-009 and CN-010 in the PHIN Messaging Guide for Case Notification Reporting, Version 3.0, Release 1.",
+                "sampleSegment": "MSH|^~\\&|SendAppName^2.16.840.1.114222.TBD^ISO|Sending-Facility^2.16.840.1.114222.TBD^ISO|PHINCDS^2.16.840.1.114222.4.3.2.10^ISO|PHIN^2.16.840.1.114222^ISO|20140630120030.1234-0500||ORU^R01^ORU_R01|MESSAGE CONTROL ID|D|2.5.1|||||||||NOTF_ORU_v3.0^PHINProfileID^2.16.840.1.114222.4.10.3^ISO~Generic_MMG_V2.0^PHINMsgMapID^2.16.840.1.114222.4.10.4^ISO"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "280026b5-43c5-4173-9c62-41aba6d57057",
+        "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+        "ordinal": 2,
+        "type": "Single",
+        "name": "Subject Related",
+        "startingDescription": "",
+        "endingDescription": "",
+        "shouldDisplayName": true,
+        "elements": [
+          {
+            "id": "df2f791b-5189-404e-972d-01c513ec8f66",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 1,
+            "name": "Local Subject ID",
+            "description": "The local ID of the subject/entity",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM197",
+                "identifier": "N/A: PID-3",
+                "messageContext": "PID-3\nPatient Identifier List",
+                "dataType": "CX",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 3,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "PID-3.1\nID Number is the local Subject ID from the sending system's internally assigned Subject ID; \n\nPID-3.4\nAssigning Authority format <localID&OID&ISO>  \n\nDoes not pass Variable ID  or label.",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppNamelocalID&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "GenV2_TC01"
+            }
+          },
+          {
+            "id": "918225f5-4ffd-47a1-b7b1-27635f5429f6",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 2,
+            "name": "Birth Date",
+            "description": "Patient’s date of birth",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM115",
+                "identifier": "N/A: PID-7",
+                "messageContext": "PID-7\nDate/Time of Birth",
+                "dataType": "TS",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 7,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For unknown date, PID-7 MAY be populated with '99999999'",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "19640502"
+            }
+          },
+          {
+            "id": "e233acfc-301a-4293-a2c8-06002a77f3a3",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 3,
+            "name": "Subject’s Sex",
+            "description": "Subject’s current sex",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_Sex_MFU",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM113",
+                "identifier": "N/A: PID-8",
+                "messageContext": "PID-8\nAdministrative Sex",
+                "dataType": "IS",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 8,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "F"
+            }
+          },
+          {
+            "id": "18a43f2c-ff15-406b-b9e1-afd8df5239ef",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 4,
+            "name": "Race Category",
+            "description": "Race category - Major OMB Race Categories. Detailed race information would be rolled up to these major OMB race categories.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": true,
+            "mayRepeat": "Y",
+            "valueSetCode": "PHVS_RaceCategory_CDC_NullFlavor",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM152",
+                "identifier": "N/A: PID-10",
+                "messageContext": "PID-10\nRace",
+                "dataType": "CE",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 10,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..*]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "2106-3"
+            }
+          },
+          {
+            "id": "13a244d2-8c20-4ddf-9a6c-a81f3ca4046a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 5,
+            "name": "Other Race Text",
+            "description": "Other Race Text",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM154",
+                "identifier": "32624-9",
+                "messageContext": "OBX segment with \nOBX-3.1=32624-9\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|1|ST|32624-9^Other Race Text^LN||Place details Other Race here ||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Apache"
+            }
+          },
+          {
+            "id": "7d65fc52-7022-4857-a2af-cfa0eb685b3e",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 6,
+            "name": "Ethnic Group",
+            "description": "Based on the self-identity of the subject as Hispanic or Latino",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_EthnicityGroup_CDC_Unk",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM155",
+                "identifier": "N/A: PID-22",
+                "messageContext": "PID-22\nEthnic Group",
+                "dataType": "CE",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 22,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "2135-2"
+            }
+          },
+          {
+            "id": "8fbdd55e-b971-465a-8df9-fea6a2df1c5f",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 7,
+            "name": "Country of Birth",
+            "description": "Country of Birth",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_BirthCountry_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM126",
+                "identifier": "78746-5",
+                "messageContext": "OBX segment with \nOBX-3.1=78746-5\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|1|CWE|78746-5^Country of Birth^LN||USA^United States^ISO3166_1||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "UZB"
+            }
+          },
+          {
+            "id": "dd308509-acc9-4fc5-b9ed-d31b8770285f",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 8,
+            "name": "Other Birth Place",
+            "description": "Other Birth Place",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM304",
+                "identifier": "21842-0",
+                "messageContext": "OBX segment with \nOBX-3.1=21842-0\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|1|ST|21842-0^Other Birth Place^LN||Place details about Other Birth Place here||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "USSR"
+            }
+          },
+          {
+            "id": "07eac6c3-948b-49ae-9050-5e5373749b3a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 9,
+            "name": "Country of Usual Residence",
+            "description": "Where does the person usually live (defined as their residence).\n\nThis variable replaces the Foreign Resident variable mentioned in 11-SI-04 titled \"Revised Guidelines for Determining Residency for Disease Reporting\" located at http://c.ymcdn.com/sites/www.cste.org/resource/resmgr/PS/11-SI-04.pdf.\n\nCases with country of usual residence equal to the US, Puerto Rico, and US Virgin Islands as well as unknown and null responses will be included in the state-specific counts and rates.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_Country_ISO_3166-1",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV501",
+                "identifier": "77983-5",
+                "messageContext": "OBX segment with\nOBX-3.1=77983-5\nOBX-5=value from value set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|2|CWE|77983-5^Country of Usual Residence^LN||USA^UNITED STATES^ISO3166_1||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "USA"
+            }
+          },
+          {
+            "id": "457353eb-9da7-469d-b91b-e969b5f64492",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 10,
+            "name": "Subject Address County",
+            "description": "County of residence of the subject",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_County_FIPS_6-4",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM165",
+                "identifier": "N/A: PID-11.9",
+                "messageContext": "PID-11.9\nPatient Address  - County",
+                "dataType": "IS",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 11,
+                "componentPosition": 9,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "The entire address construct (PID-11) may repeat per HL7, but only expecting the first instance to be populated and parsed.\n\nAddress county will be used in the annual summary and  it needs to be populated",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "48201"
+            }
+          },
+          {
+            "id": "c5b828bf-ee57-4ac1-bf66-fc71a7bd28b9",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 11,
+            "name": "Subject Address State",
+            "description": "State of residence of the subject",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "O",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_State_FIPS_5-2",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM162",
+                "identifier": "N/A: PID-11.4",
+                "messageContext": "PID-11.4\nPatient Address  - State=value from value set",
+                "dataType": "ST",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 11,
+                "componentPosition": 4,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "The entire address construct (PID-11) may repeat per HL7, but only expecting the first instance to be populated and parsed.",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "48"
+            }
+          },
+          {
+            "id": "a779a11d-ad38-4bd4-bbdb-1555514b9fc4",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "280026b5-43c5-4173-9c62-41aba6d57057",
+            "ordinal": 12,
+            "name": "Subject Address ZIP Code",
+            "description": "ZIP Code of residence of the subject",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "DEM163",
+                "identifier": "N/A: PID-11.5",
+                "messageContext": "PID-11.5\nPatient Address  - Postal Code=string up to 12 characters",
+                "dataType": "ST",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 11,
+                "componentPosition": 5,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "The entire address construct (PID-11) may repeat per HL7, but only expecting the first instance to be populated and parsed.",
+                "sampleSegment": "PID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC"
+              }
+            },
+            "defaultValue": {
+              "value": "77018"
+            }
+          }
+        ]
+      },
+      {
+        "id": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+        "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+        "ordinal": 3,
+        "type": "Single",
+        "name": "Case Related",
+        "startingDescription": "",
+        "endingDescription": "",
+        "shouldDisplayName": true,
+        "elements": [
+          {
+            "id": "9928d4d6-eea0-4e3f-9e06-85cfb2c3199a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 1,
+            "name": "Date of Illness Onset",
+            "description": "Date of the beginning of the illness.  Reported date of the onset of symptoms of the condition being reported to the public health system.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV137",
+                "identifier": "11368-8",
+                "messageContext": "OBX segment with \nOBX-3.1=11368-8\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For unknown date, OBX-5 MAY be populated with '99999999'",
+                "sampleSegment": "OBX|1|TS|11368-8^Date of Illness Onset^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140224"
+            }
+          },
+          {
+            "id": "93942d4e-63ec-46a6-a5cd-1e71d976d90d",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 2,
+            "name": "Illness End Date",
+            "description": "Date at which the disease or condition ends.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV138",
+                "identifier": "77976-9",
+                "messageContext": "OBX segment with \nOBX-3.1=77976-9\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|2|TS|77976-9^Illness End Date^LN||20140413||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140302"
+            }
+          },
+          {
+            "id": "1334f3fc-a02a-47b3-92d4-63153b11dd64",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 3,
+            "name": "Illness Duration",
+            "description": "Length of time this subject had this disease or condition.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Numeric",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV139",
+                "identifier": "77977-7",
+                "messageContext": "OBX segment with \nOBX-3.1=77977-7\nOBX-5.2=numeric value\nOBX-6=units value from INV140 value set;",
+                "dataType": "SN",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|3|SN|77977-7-7^Illness Duration^LN||^12|d^day^UCUM|||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "6"
+            }
+          },
+          {
+            "id": "abd9a2fc-03ad-418b-9819-6bedc955dbaa",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 4,
+            "name": "Illness Duration Units",
+            "description": "Unit of time used to describe the length of the illness or condition.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "relatedElementId": "1334f3fc-a02a-47b3-92d4-63153b11dd64",
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_DurationUnit_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV140",
+                "identifier": "N/A: OBX-6",
+                "messageContext": "OBX-6-Units",
+                "dataType": "CE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 6,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Part of the INV139 Observation/OBX Segment.",
+                "sampleSegment": "OBX|3|SN|77977-7^Illness Duration^LN||^12|d^day^UCUM|||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "d"
+            }
+          },
+          {
+            "id": "f3722238-af5e-4346-907d-736edaa47863",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 5,
+            "name": "Pregnancy Status",
+            "description": "Indicates whether the subject was pregnant at the time of the event.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_YesNoUnknown_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV178",
+                "identifier": "77996-7",
+                "messageContext": "OBX segment with \nOBX-3.1=77996-7\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|4|CWE|77996-7^Pregnancy Status^LN||N^No^HL70136||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "N"
+            }
+          },
+          {
+            "id": "4018be44-a07b-47fc-a422-3b41cf59d670",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 6,
+            "name": "Diagnosis Date",
+            "description": "Earliest date of diagnosis (clinical or laboratory) of condition being reported to public health system.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV136",
+                "identifier": "77975-1",
+                "messageContext": "OBX segment with \nOBX-3.1=77975-1\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For unknown date, OBX-5 MAY be populated with '99999999'",
+                "sampleSegment": "OBX|5|TS|77975-1^Diagnosis Date^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "bc126dea-f2d7-4c00-9e6e-a92e240e1ae8",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 7,
+            "name": "Hospitalized",
+            "description": "Was subject hospitalized because of this event?",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_YesNoUnknown_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV128",
+                "identifier": "77974-4",
+                "messageContext": "OBX segment with \nOBX-3.1=77974-4\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|6|CWE|77974-4^Hospitalized^LN||Y^Yes^HL70136||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Y"
+            }
+          },
+          {
+            "id": "4283972a-8ac7-4c88-8cb6-cbe3057b8bc7",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 8,
+            "name": "Admission Date",
+            "description": "Subject’s most recent admission date to the hospital for the condition covered by the investigation.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV132",
+                "identifier": "8656-1",
+                "messageContext": "OBX segment with \nOBX-3.1=8656-1\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Use the most recent admission, in association with this instance of the case.",
+                "sampleSegment": "OBX|7|TS|8656-1^Admission Date^LN||20131230||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140226"
+            }
+          },
+          {
+            "id": "e29fcb10-851e-4643-a447-c90e9a27bb8a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 9,
+            "name": "Discharge Date",
+            "description": "Subject's most recent discharge date from the hospital for the condition covered by the investigation.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV133",
+                "identifier": "8649-6",
+                "messageContext": "OBX segment with \nOBX-3.1=8649-6\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Use the most recent discharge, related to the admission represented by variable INV132.",
+                "sampleSegment": "OBX|8|TS|8649-6^Discharge Date^LN||20140104||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140302"
+            }
+          },
+          {
+            "id": "1514b03e-e4fb-42f1-b63a-4e6add08d7c6",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 10,
+            "name": "Duration of Hospital Stay in Days",
+            "description": "Subject's duration of stay at the hospital for the condition covered by the investigation.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Numeric",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV134",
+                "identifier": "78033-8",
+                "messageContext": "OBX segment with \nOBX-3.1=78033-8\nOBX-5.2=numeric value",
+                "dataType": "SN",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Populate OBX-6 with d^day^UCUM.",
+                "sampleSegment": "OBX|9|SN|78033-8^Duration of hospital stay in days^LN||^5|d^day^UCUM|||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "4"
+            }
+          },
+          {
+            "id": "2383f96f-098a-4af3-9ada-f6c6aab923af",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 11,
+            "name": "Subject Died",
+            "description": "Did the subject die from this illness or complications of this illness?",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_YesNoUnknown_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV145",
+                "identifier": "77978-5",
+                "messageContext": "OBX segment with \nOBX-3.1=77978-5\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|10|CWE|77978-5^Subject Died^LN||Y^Yes^HL70136||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Y"
+            }
+          },
+          {
+            "id": "827d2f8f-eec9-49f0-9265-0fc681f120b5",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 12,
+            "name": "Deceased Date",
+            "description": "If the subject died from this illness or complications associated with this illness, indicate the date of death.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV146",
+                "identifier": "N/A: PID-29",
+                "messageContext": "PID-29 Patient Death Date and Time",
+                "dataType": "TS",
+                "segmentType": "PID",
+                "obrPosition": 1,
+                "fieldPosition": 29,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "PID -29 Sample Segment :\n\nPID|1||LocalPatID1DEM197^^^SendAppName&2.16.840.1.114222.GENv2&ISO||~^^^^^^S||19620302|F||2106-3^White^CDCREC~1002-5^American Indian or Alaska Native^CDCREC|^^^18^47635^^^^18097|||||||||||2135-2^Hispanic or Latino^CDCREC|||||||20"
+              }
+            },
+            "defaultValue": {
+              "value": "20140302"
+            }
+          },
+          {
+            "id": "c30ce921-63d7-4981-833b-5b5c99c51bb3",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 13,
+            "name": "Condition Code",
+            "description": "Condition or event that constitutes the reason the notification is being sent.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "N/A",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV169",
+                "identifier": "N/A: OBR-31",
+                "messageContext": "OBR-31 Reason for Study in the OBR segment with an OBR-4 value of '68991-9^Epidemiologic Information^LN'",
+                "dataType": "CE",
+                "segmentType": "OBR",
+                "obrPosition": 1,
+                "fieldPosition": 31,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Refer to the Event Code List of Nationally Notifiable Diseases and Other Conditions of Public Health Importance document for the relevant MMWR year.\n\nThis references can be found on the NNDSS Messaging Mapping Guide web site: http://wwwn.cdc.gov/nndss/mes",
+                "sampleSegment": "OBR|1|\"\"|INV168^SendAppName^2.16.840.1.114222.TBD^ISO|68991-9^Epidemiologic Information^LN|||20140506170100|||||||||||||||20140506170100|||F||||||11550^Hemolytic uremic syndrome postdiarrheal^NND"
+              }
+            },
+            "defaultValue": {
+              "value": "11550"
+            }
+          },
+          {
+            "id": "6665e1dc-de3d-4e98-a4cc-cb26c4289a2e",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 14,
+            "name": "Local Record ID",
+            "description": "Sending system-assigned local ID of the case investigation with which the subject is associated.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV168",
+                "identifier": "N/A: OBR-3",
+                "messageContext": "OBR-3\nFiller Order Number  in the OBR segment with an OBR-4 value of '68991-9^Epidemiologic Information^LN'",
+                "dataType": "EI",
+                "segmentType": "OBR",
+                "obrPosition": 1,
+                "fieldPosition": 3,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "OBR-3.1 is the internally assigned case/investigation ID.\n\nOBR-3.3 is the OID for sending application as assigning authority.\n\nOBR-3.4 is the literal value: 'ISO'.\n\nNational reporting jurisdiction (77968-6) and Local Record ID (INV168 in OBR-3) are used together to define a unique case in the CDC database.  The values for each of these data elements must remain the same when sending updates on a unique case.  Any changes to these data elements will cause the addition of a new case to the CDC database.  For more details, refer to the document on the MMG web site: http://wwwn.cdc.gov/nndss/document/Generic_Data_Elements_that_Define_a_Unique_Case.docx",
+                "sampleSegment": "OBR|2|\"\"|CASE/Investigation ID^SendAppName^2.16.840.1.114222.TBD^ISO|EPIINFO^Epidemiologic Information^CDCPHINVS|||20140506170100|||||||||||||||20140506170100|||F||||||11550^Hemolytic uremic syndrome postdiarrheal^NND"
+              }
+            },
+            "defaultValue": {
+              "value": "GenV2_TC01"
+            }
+          },
+          {
+            "id": "313e6282-fa94-43d7-b276-0c9e29f9c091",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 15,
+            "name": "State Case Identifier",
+            "description": "States use this identifier to link NEDSS investigations back to their own state investigations.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV173",
+                "identifier": "77993-4",
+                "messageContext": "OBX segment with \nOBX-3.1=77993-4\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|1|ST|77993-4^State Case Identifier^LN||2014IN100000001||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "TX4321"
+            }
+          },
+          {
+            "id": "17c8098b-0945-4a20-ae3a-0b608964b98c",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 16,
+            "name": "Legacy Case Identifier",
+            "description": "CDC uses this identifier to link current case notifications to case notifications submitted by a previous system (NETSS, STD-MIS, etc.).",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV200",
+                "identifier": "77997-5",
+                "messageContext": "OBX segment with \nOBX-3.1=77997-5\nOBX-5=Legacy Case Identifier",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For a NETSS case ID, please use the following format:  \nCase ID(6) - State(2) - Site(3) - Year(4)\ne.g.,  CaseId01LAB2009.",
+                "sampleSegment": "OBX|2|ST|77997-5^Legacy Case Identifier^LN||61528936181002006||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "48432148S012014"
+            }
+          },
+          {
+            "id": "b0fa71f1-71c0-4ecb-b2ea-7432f5890ba5",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 17,
+            "name": "Age at Case Investigation",
+            "description": "Subject age at time of case investigation",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Numeric",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV2001",
+                "identifier": "77998-3",
+                "messageContext": "OBX segment with \nOBX-3.1=77998-3\nOBX-5.2=numeric value\nOBX-6=units value from INV2002 value set;",
+                "dataType": "SN",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "AGE should populate the second component of the OBX.5 field.  In HL7, components are typically separated by the character ‘^’ (Caret).\n\nOBX-5.2 will contain '9999' for unknown Age at case investigation.",
+                "sampleSegment": "OBX|3|SN|77998-3^Age at Case investigation^LN||^51|a^year^UCUM|||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "49"
+            }
+          },
+          {
+            "id": "6a1a06f1-e752-4f67-948c-851160d9f374",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 18,
+            "name": "Age Unit at Case Investigation",
+            "description": "Subject age unit at time of case investigation",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "relatedElementId": "b0fa71f1-71c0-4ecb-b2ea-7432f5890ba5",
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_AgeUnit_UCUM",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV2002",
+                "identifier": "N/A: OBX-6",
+                "messageContext": "OBX-6-Units",
+                "dataType": "CE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 6,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Part of the INV2001 Observation/OBX Segment.",
+                "sampleSegment": "OBX|3|SN|77998-3^Age at Case investigation^LN||^51|a^year^UCUM|||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "a"
+            }
+          },
+          {
+            "id": "55dd0919-8991-47cd-a946-788634c1d4a9",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 19,
+            "name": "Case Disease Imported Code",
+            "description": "Indication of where the disease/condition was likely acquired.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_DiseaseAcquiredJurisdiction_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV152",
+                "identifier": "77982-7",
+                "messageContext": "OBX segment with \nOBX-3.1=77982-7\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|4|CWE|77982-7^Case Disease Imported Code^LN||PHC246^Out of State^CDCPHINVS||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "PHC246"
+            }
+          },
+          {
+            "id": "7d1a4941-6a05-45b7-a671-74ea67a1b1d1",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 20,
+            "name": "Imported Country",
+            "description": "If the disease or condition was imported, indicates the country in which the disease was likely acquired.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "PHINQUESTION",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_Country_ISO_3166-1",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV153",
+                "identifier": "INV153",
+                "messageContext": "OBX segment with \nOBX-3.1=INV153\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Three-letter country code",
+                "sampleSegment": "OBX|5|CWE|INV153^Imported Country^PHINQUESTION||MEX^Mexico^ISO3166_1||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "USA"
+            }
+          },
+          {
+            "id": "1863f6dd-d646-47d5-b886-9080a8cfabc0",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 21,
+            "name": "Imported State",
+            "description": "If the disease or condition was imported, indicates the state in which the disease was likely acquired.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "PHINQUESTION",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_State_FIPS_5-2",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV154",
+                "identifier": "INV154",
+                "messageContext": "OBX segment with \nOBX-3.1=INV154\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Two-digit numeric FIPS code",
+                "sampleSegment": "OBX|6|CWE|INV154^Imported State^PHINQUESTION||48^Texas^FIPS5_2||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "04"
+            }
+          },
+          {
+            "id": "d692f87d-4095-4777-bafb-7049cdc80d07",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 22,
+            "name": "Imported City",
+            "description": "If the disease or condition was imported, indicates the city in which the disease was likely acquired.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "PHINQUESTION",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_City_USGS_GNIS",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV155",
+                "identifier": "INV155",
+                "messageContext": "OBX segment with \nOBX-3.1=INV155\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "One-to-ten digit numeric GNIS Feature ID",
+                "sampleSegment": "OBX|7|CWE|INV155^Imported City^PHINQUESTION||1350851^Abernathy^USGSGNIS||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "",
+              "label": "Houston, TX, Harris"
+            }
+          },
+          {
+            "id": "bf98da0d-48ef-4bcb-aacc-e3f2a43ab276",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "64c5e4c8-2dee-4ec1-b3f2-141db90e15bf",
+            "ordinal": 23,
+            "name": "Imported County",
+            "description": "If the disease or condition was imported, contains the county of origin of the disease or condition.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "PHINQUESTION",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_County_FIPS_6-4",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV156",
+                "identifier": "INV156",
+                "messageContext": "OBX segment with \nOBX-3.1=INV156\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Five-digit numeric FIPS code",
+                "sampleSegment": "OBX|8|CWE|INV156^Imported County^PHINQUESTION||48303^Lubbock, TX^FIPS6_4||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "",
+              "label": "Harris, TX"
+            }
+          }
+        ]
+      },
+      {
+        "id": "eac0fcf3-a9e3-4e4a-a731-ec223c4b2ceb",
+        "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+        "ordinal": 4,
+        "type": "Repeat",
+        "name": "Repeating Variables for Disease Exposure",
+        "startingDescription": "",
+        "endingDescription": "",
+        "shouldDisplayName": true,
+        "elements": [
+          {
+            "id": "2cc47e98-8212-4ef1-948a-1e2fcf7309ca",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "eac0fcf3-a9e3-4e4a-a731-ec223c4b2ceb",
+            "ordinal": 1,
+            "name": "Country of Exposure",
+            "description": "Indicates the country in which the disease was likely acquired.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_Country_ISO_3166-1",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV502",
+                "identifier": "77984-3",
+                "messageContext": "OBX segment with \nOBX-3.1=77984-3\nOBX-4=obs sub-ID\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "YES",
+                "implementationNotes": "CSTE has asked CDC to consider replacing INV153 (Imported Country) with INV502 (Country of exposure), in a repeating block format. CSTE and CDC have agreed to work together to evaluate whether the newly proposed variable can either replace or populate the imported field. Until the time that assessment can be made, CDC will need to be able to use the imported fields for reports and publications.",
+                "sampleSegment": "OBX|9|CWE|77984-3^Country of Exposure^LN|1|USA^United States^ISO3166_1||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "USA"
+            }
+          },
+          {
+            "id": "cd308f98-95c1-4d93-a9bd-52335c3d3486",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "eac0fcf3-a9e3-4e4a-a731-ec223c4b2ceb",
+            "ordinal": 2,
+            "name": "State or Province of Exposure",
+            "description": "Indicates the state (or Province) in which the disease was likely acquired.\n\nNote: If Country of exposure was US, populate with US State. If Country of exposure was Mexico, populate with Mexican State. If country of exposure was Canada, populated with Canadian Province. For all other countries, leave null.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_StateProvinceOfExposure_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV503",
+                "identifier": "77985-0",
+                "messageContext": "OBX segment with\nOBX-3.1=77985-0\nOBX-4=obs sub-ID\nOBX-5=value from value set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "YES",
+                "implementationNotes": "CSTE has asked CDC to consider replacing INV154 (Imported State) with INV503 (State or Province of exposure), in a repeating block format. CSTE and CDC have agreed to work together to evaluate whether the newly proposed variable can either replace the imported field or populate the imported field. Until the time that assessment can be made, CDC will need to be able to use the imported fields for reports and publications.",
+                "sampleSegment": "OBX|10|CWE|77985-0^State or Province of Exposure^LN|1|06^California^FIPS5_2||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "48"
+            }
+          },
+          {
+            "id": "40e12cd8-156e-4205-9073-173bce6aef74",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "eac0fcf3-a9e3-4e4a-a731-ec223c4b2ceb",
+            "ordinal": 3,
+            "name": "City of Exposure",
+            "description": "Indicates the city in which the disease was likely acquired\n\nNote: If country of exposure is US, populate with US city. For all other cities, can be populated but not required.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV504",
+                "identifier": "77986-8",
+                "messageContext": "OBX segment with \nOBX-3.1=77986-8\nOBX-4=obs sub-ID\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "YES",
+                "implementationNotes": "CSTE has asked CDC to consider replacing INV155 (Imported City) with INV504 (City of exposure), in a repeating block format. CSTE and CDC have agreed to work together to evaluate whether the newly proposed variable can either replace or populate the imported field. Until the time that assessment can be made, CDC will need to be able to use the imported field for reports and publications.",
+                "sampleSegment": "OBX|11|ST|77986-8^City of Exposure^LN|1|Pasadena||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Houston"
+            }
+          },
+          {
+            "id": "7cbc5158-8d8e-4a07-92d8-81186115b0b1",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "eac0fcf3-a9e3-4e4a-a731-ec223c4b2ceb",
+            "ordinal": 4,
+            "name": "County of Exposure",
+            "description": "Indicates the county in which the disease was likely acquired\n\nNote: If country of exposure is US, populate with US county.  Otherwise, leave null.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV505",
+                "identifier": "77987-6",
+                "messageContext": "OBX segment with \nOBX-3.1=77987-6\nOBX-4=obs sub-ID\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "YES",
+                "implementationNotes": "CSTE has asked CDC to consider replacing INV156 (Imported County) with INV505 (County of exposure), in a repeating block format. CSTE and CDC have agreed to work together to evaluate whether the newly proposed variable can either replace or populate the imported field. Until the time that assessment can be made, CDC will need to be able to use the imported field for reports and publications.",
+                "sampleSegment": "OBX|12|ST|77987-6^County of Exposure^LN|1|Los Angeles||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Harris"
+            }
+          }
+        ]
+      },
+      {
+        "id": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+        "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+        "ordinal": 5,
+        "type": "Single",
+        "name": "Misc",
+        "startingDescription": "",
+        "endingDescription": "",
+        "shouldDisplayName": true,
+        "elements": [
+          {
+            "id": "47253d49-9f33-4574-97d4-734e1a646371",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 1,
+            "name": "Transmission Mode",
+            "description": "Code for the mechanism by which disease or condition was acquired by the subject of the investigation.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_CaseTransmissionMode_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV157",
+                "identifier": "77989-2",
+                "messageContext": "OBX segment with \nOBX-3.1=77989-2\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|13|CWE|77989-2^Transmission Mode^LN||420014008^Bloodborne Transmission^SCT||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "416086007"
+            }
+          },
+          {
+            "id": "85a02430-b77d-4027-8a97-20895cd61c55",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 2,
+            "name": "Case Class Status Code",
+            "description": "Status of the case/event as suspect, probable, confirmed, or not a case per CSTE/CDC/ surveillance case definitions.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_CaseClassStatus_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV163",
+                "identifier": "77990-0",
+                "messageContext": "OBX segment with \nOBX-3.1=77990-0\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|14|CWE|77990-0^Case Class Status Code^LN||410605003^Confirmed Present^SCT||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "410605003"
+            }
+          },
+          {
+            "id": "074a0eae-f5cb-4db7-84be-d855b1108675",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 3,
+            "name": "Immediate National Notifiable Condition",
+            "description": "Does this case meet the criteria for immediate (extremely urgent or urgent) notification to CDC? Refer to the 2015 list of NNC by type of notification category (extremely urgent, urgent, and standard) at the following link: http://wwwn.cdc.gov/nndss/document/NNC_2015_Notification_Requirements_By_Category.pdf",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_YesNoUnknown_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT120",
+                "identifier": "77965-2",
+                "messageContext": "OBX segment with \nOBX-3.1=77965-2\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "If Immediate National Notifiable Condition = 'Y' (meaning the condition is immediately nationally notifiable), populate OBX.5 with 'Y^Yes^HL70136'.\n\nIf Immediate National Notifiable Condition= 'N' (meaning it is NOT immediately nationally notifiable), populate OBX.5 with 'N^No^HL70136'.\n\nIf Immediate National Notifiable Condition = 'U' (meaning it is not known whether the condition is immediately nationally notifiable or not), populate OBX.5 with 'UNK^Unknown^NULLFL'.",
+                "sampleSegment": "OBX|15|CWE|77965-2^Immediate National Notifiable Condition^LN||Y^Yes^HL70136||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "N"
+            }
+          },
+          {
+            "id": "dfa5ee59-5af5-4c65-9f23-54c69b7ab086",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 4,
+            "name": "Case Outbreak Indicator",
+            "description": "Denotes whether the reported case was associated with an identified outbreak.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_YesNoUnknown_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV150",
+                "identifier": "77980-1",
+                "messageContext": "OBX segment with \nOBX-3.1=77980-1\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|16|CWE|77980-1^Case Outbreak Indicator^LN||Y^Yes^HL70136||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Y"
+            }
+          },
+          {
+            "id": "b990f6de-497d-4ffb-89a4-e786075421d4",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 5,
+            "name": "Case Outbreak Name",
+            "description": "A state-assigned name for an identified outbreak.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV151",
+                "identifier": "77981-9",
+                "messageContext": "OBX segment with \nOBX-3.1=77981-9\nOBX-5=Case Outbreak Name (up to 199 characters)",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Note: that this is a locally-defined field.",
+                "sampleSegment": "OBX|17|ST|77981-9^Case Outbreak Name^LN||HANSENOUTB1||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "HANSENOUTB1"
+            }
+          },
+          {
+            "id": "8b866406-5cad-4586-9284-7c0b7537e246",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 6,
+            "name": "Notification Result Status",
+            "description": "Status of the notification",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_ResultStatus_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT118",
+                "identifier": "N/A: OBR-25",
+                "messageContext": "OBR-25\nResult Status in the OBR segment with an OBR-4 value of '68991-9^Epidemiologic Information^LN'",
+                "dataType": "ID",
+                "segmentType": "OBR",
+                "obrPosition": 1,
+                "fieldPosition": 25,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBR|2|\"\"|INV168^SendAppName^2.16.840.1.114222.TBD^ISO|EPIINFO^Epidemiologic Information^CDCPHINVS|||20140506170100|||||||||||||||20140506170100|||F||||||11550^Hemolytic uremic syndrome postdiarrheal^NND"
+              }
+            },
+            "defaultValue": {
+              "value": "F"
+            }
+          },
+          {
+            "id": "5f37a5f6-092e-4911-bcc2-f4016bd5908e",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 7,
+            "name": "Jurisdiction Code",
+            "description": "Identifier for the physical site from which the notification is being submitted.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV107",
+                "identifier": "77969-4",
+                "messageContext": "OBX segment with \nOBX-3.1=77969-4\nOBX-5=Jurisdiction (up to 199 characters)",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Note: that this is a locally-defined field",
+                "sampleSegment": "OBX|18|ST|77969-4^Jurisdiction Code^LN||18||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "S01"
+            }
+          },
+          {
+            "id": "c5d4d7a0-123e-4718-835e-1ae09039f43a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 8,
+            "name": "Reporting Source Type Code",
+            "description": "Type of facility or provider associated with the source of information sent to Public Health.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_ReportingSourceType_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV112",
+                "identifier": "48766-0",
+                "messageContext": "OBX segment with \nOBX-3.1=48766-0\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|19|CWE|48766-0^Reporting Source Type Code^LN||1^Hospital^HL70406||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "1"
+            }
+          },
+          {
+            "id": "2559754c-ef80-4381-a94d-e906314a63e9",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 9,
+            "name": "Reporting Source ZIP Code",
+            "description": "ZIP Code of the reporting source for this case.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV118",
+                "identifier": "52831-5",
+                "messageContext": "OBX segment with \nOBX-3.1=52831-5\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|20|ST|52831-5^Reporting Source Zip Code^LN||47635||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "77018"
+            }
+          },
+          {
+            "id": "8f782b26-1227-4505-8e42-8be9e3d44aea",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 10,
+            "name": "Binational Reporting Criteria",
+            "description": "For cases meeting the binational criteria, select all the criteria which are met.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": true,
+            "mayRepeat": "Y",
+            "valueSetCode": "PHVS_BinationalReportingCriteria_CDC",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV515",
+                "identifier": "77988-4",
+                "messageContext": "OBX segment with \nOBX-3.1=77988-4\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..*]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|21|CWE|77988-4^Binational Reporting Criteria^LN||PHC1140^Exposure to a suspected product from Mexico or Canada^CDCPHINVS||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "PHC1140"
+            }
+          },
+          {
+            "id": "d219d4e1-a3fa-4689-8dc6-8545742643b1",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 11,
+            "name": "Person Reporting to CDC - Name",
+            "description": "Name of the person who is reporting the case to the CDC.  This is the person that CDC should contact in a state if there are questions regarding this case notification.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV190",
+                "identifier": "74549-7",
+                "messageContext": "OBX segment with \nOBX-3.1=74549-7\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|22|ST|74549-7^Person Reporting to CDC - Name^LN||Smith, John||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "Smith, John"
+            }
+          },
+          {
+            "id": "187044c2-c2a0-4c20-9a02-79b3b114968b",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 12,
+            "name": "Person Reporting to CDC - Phone Number",
+            "description": "Phone Number of the person who is reporting the case to the CDC.  This is the person that CDC should contact in a state if there are questions regarding this case notification.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV191",
+                "identifier": "74548-9",
+                "messageContext": "OBX segment with \nOBX-3.1=74548-9\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|23|ST|74548-9^Person Reporting to CDC-Phone Number^LN||(734)677-7777||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "444-321-1234"
+            }
+          },
+          {
+            "id": "04514ba0-4f17-4822-96ec-d07d0f97bf90",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 13,
+            "name": "Person Reporting to CDC - Email",
+            "description": "Email Address of the person reporting the case to the CDC. This is the person that CDC should contact in a state if there are questions regarding this case notification.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Text",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV193",
+                "identifier": "74547-1",
+                "messageContext": "OBX segment with \nOBX-3.1=74547-1\nOBX-5=string up to 199 characters",
+                "dataType": "ST",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|24|ST|74547-1^Person Reporting to CDC - Email^LN||xxx@yyy.org||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "jsmith@txdoh.org"
+            }
+          },
+          {
+            "id": "20f6160e-7b39-426e-aebf-1e76ce7c7856",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 14,
+            "name": "Case Investigation Start Date",
+            "description": "The date the case investigation was initiated.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV147",
+                "identifier": "77979-3",
+                "messageContext": "OBX segment with \nOBX-3.1=77979-3\nOBX-5=date",
+                "dataType": "DT",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|25|DT|77979-3^Investigation State Date^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "e396d078-4e20-4830-8111-8cdc06fefce3",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 15,
+            "name": "Date First Electronically Submitted",
+            "description": "Date/time the notification was first electronically sent to CDC.  This value does not change after the original notification.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "DateTime",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT103",
+                "identifier": "N/A: OBR-7",
+                "messageContext": "OBR-7=date",
+                "dataType": "TS",
+                "segmentType": "OBR",
+                "obrPosition": 1,
+                "fieldPosition": 7,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Refer to Conformance Statement CN-017 in the PHIN Messaging Guide for Case Notification Reporting, Version 3.0, Release 1.",
+                "sampleSegment": "OBR|1|\"\"|INV168^SendAppName^2.16.840.1.114222.TBD^ISO|68991-9^Epidemiologic Information^LN|||20140506170100|||||||||||||||20140506170100|||F||||||11550^Hemolytic uremic syndrome postdiarrheal^NND"
+              }
+            },
+            "defaultValue": {
+              "value": "20140227170100"
+            }
+          },
+          {
+            "id": "fff2da7c-79de-4582-8560-14cef5f71ccb",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 16,
+            "name": "Date of Electronic Case Notification to CDC",
+            "description": "Date/time this version of the electronic case notification was sent.  It will be the same value as NOT103 for the original notification.  For updates, this is the update/send date/time.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "DateTime",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "N/A",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT106",
+                "identifier": "N/A: OBR-22",
+                "messageContext": "OBR-22=date",
+                "dataType": "TS",
+                "segmentType": "OBR",
+                "obrPosition": 1,
+                "fieldPosition": 22,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Refer to Conformance Statement CN-018 in the PHIN Messaging Guide for Case Notification Reporting, Version 3.0, Release 1.",
+                "sampleSegment": "OBR|1|\"\"|INV168^SendAppName^2.16.840.1.114222.TBD^ISO|68991-9^Epidemiologic Information^LN|||20140506170100|||||||||||||||20140506170100|||F||||||11550^Hemolytic uremic syndrome postdiarrheal^NND"
+              }
+            },
+            "defaultValue": {
+              "value": "20140227170100"
+            }
+          },
+          {
+            "id": "54ce917b-82c4-406c-ab82-871536892a20",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 17,
+            "name": "Date Reported",
+            "description": "Date that a health department first suspected the subject might have the condition.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "1",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV111",
+                "identifier": "77995-9",
+                "messageContext": "OBX segment with \nOBX-3.1=77995-9\nOBX-5=date",
+                "dataType": "DT",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|26|DT|77995-9^Date Reported^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "5cd792cf-fc9a-4bb4-b6b3-90e08f59091d",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 18,
+            "name": "Earliest Date Reported to County",
+            "description": "Earliest date reported to county public health system.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV120",
+                "identifier": "77972-8",
+                "messageContext": "OBX segment with \nOBX-3.1=77972-8\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For unknown date, OBX-5 MAY be populated with '99999999'",
+                "sampleSegment": "OBX|27|TS|77972-8^Earliest Date Reported to County^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "33ed2ea9-0e8e-44fc-96a3-a4de42e403bf",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 19,
+            "name": "Earliest Date Reported to State",
+            "description": "Earliest date reported to state public health system.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV121",
+                "identifier": "77973-6",
+                "messageContext": "OBX segment with \nOBX-3.1=77973-6\nOBX-5=date",
+                "dataType": "TS",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "For unknown date, OBX-5 MAY be populated with '99999999'",
+                "sampleSegment": "OBX|28|TS|77973-6^Earliest Date reported to State^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "e5f0a1fa-53d4-4c5f-b63e-880e9c127ccf",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 20,
+            "name": "MMWR Week",
+            "description": "MMWR Week for which case information is to be counted for MMWR publication.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Numeric",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV165",
+                "identifier": "77991-8",
+                "messageContext": "OBX segment with \nOBX-3.1=77991-8\nOBX-5.2=numeric value",
+                "dataType": "SN",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "WEEK should populate the second component of the OBX.5 field.",
+                "sampleSegment": "OBX|29|SN|77991-8^MMWR Week^LN||^20||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "9"
+            }
+          },
+          {
+            "id": "d7fcf097-015e-42a0-8b11-1e795b5820eb",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 21,
+            "name": "MMWR Year",
+            "description": "MMWR Year (YYYY) for which case information is to be counted for MMWR publication.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV166",
+                "identifier": "77992-6",
+                "messageContext": "OBX segment with \nOBX-3.1=77992-6\nOBX-5=date",
+                "dataType": "DT",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "CONFORMANCE STATEMENT:\nOBX-5=date SHALL be in YYYY format",
+                "sampleSegment": "OBX|30|DT|77992-6^MMWR Year^LN||2014||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "2014"
+            }
+          },
+          {
+            "id": "300c94b0-2aa5-4174-834c-c2799ac843b8",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 22,
+            "name": "Date CDC Was First Verbally Notified of This Case",
+            "description": "Date the case of an Immediately National Notifiable Condition was first verbally reported to the CDC Emergency Operation Center or the CDC Subject Matter Expert responsible for this condition.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV176",
+                "identifier": "77994-2",
+                "messageContext": "OBX segment with \nOBX-3.1=77994-2\nOBX-5=date",
+                "dataType": "DT",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|31|DT|77994-2^Date CDC was first verbally notified of this Case^LN||20130106||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "2a5d04d1-4fcf-43ba-8654-1dd2172978cf",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 23,
+            "name": "Date First Reported to PHD",
+            "description": "Date the report was first sent to the public health department (local, county or state) by reporter (physician, lab, etc.).",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Date",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV177",
+                "identifier": "77970-2",
+                "messageContext": "OBX segment with \nOBX-3.1=77970-2\nOBX-5=date",
+                "dataType": "DT",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|32|DT|77970-2^Date First Reported to PHD^LN||20140401||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "20140225"
+            }
+          },
+          {
+            "id": "575f896d-c491-4605-9414-f0ca1cc446b8",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 24,
+            "name": "Reporting State",
+            "description": "State reporting the notification",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_State_FIPS_5-2",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT109",
+                "identifier": "77966-0",
+                "messageContext": "OBX segment with \nOBX-3.1=77966-0\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|33|CWE|77966-0^Reporting State^LN||18^Indiana^FIPS5_2||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "48"
+            }
+          },
+          {
+            "id": "54d73684-6024-4040-a5de-37f01c4ab80a",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 25,
+            "name": "Reporting County",
+            "description": "County reporting the notification",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "P",
+            "priority": "2",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_County_FIPS_6-4",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT113",
+                "identifier": "77967-8",
+                "messageContext": "OBX segment with \nOBX-3.1=77967-8\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "RE",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "",
+                "sampleSegment": "OBX|34|CWE|77967-8^Reporting County^LN||18097^Marion^FIPS6_4||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "48201"
+            }
+          },
+          {
+            "id": "69a1f2f9-7d4f-4887-90cb-f2cf23447094",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 26,
+            "name": "National Reporting Jurisdiction",
+            "description": "National jurisdiction reporting the notification to CDC",
+            "comments": "",
+            "status": "Final",
+            "dataType": "Coded",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "R",
+            "priority": "R",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "PHVS_NationalReportingJurisdiction_NND",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "NOT116",
+                "identifier": "77968-6",
+                "messageContext": "OBX segment with \nOBX-3.1=77968-6\nOBX-5=Value from value Set",
+                "dataType": "CWE",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "R",
+                "cardinality": "[1..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "National reporting jurisdiction (77968-6) and Local Record ID (INV168 in OBR-3) are used together to define a unique case in the CDC database. The values for each of these data elements must remain the same when sending updates on a unique case.  Any changes to these data elements will cause the addition of a new case to the CDC database.  For more details, refer to the document on the MMG web site: http://wwwn.cdc.gov/nndss/document/Generic_Data_Elements_that_Define_a_Unique_Case.docx",
+                "sampleSegment": "OBX|35|CWE|77968-6^National Reporting Jurisdiction^LN||18^Indiana^FIPS5_2||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "48"
+            }
+          },
+          {
+            "id": "4ebe3e8d-a885-495e-883d-7a9e1d56c239",
+            "guideId": "88e35837-86b3-4166-ade9-ee4bc2b9bee3",
+            "guideInternalVersion": 4,
+            "blockId": "e4ef9c62-bb10-4908-a218-5381b10dcd2e",
+            "ordinal": 27,
+            "name": "Comment",
+            "description": "Use this field, if needed, to communicate anything unusual about this case, which is not already covered with the other data elements.  \n\nDo not send personally identifiable information to CDC in this field.",
+            "comments": "",
+            "status": "Final",
+            "dataType": "LongText",
+            "businessRules": "",
+            "isUnitOfMeasure": false,
+            "legacyCodeSystem": "PHINQUESTION",
+            "codeSystem": "LN",
+            "legacyPriority": "O",
+            "priority": "3",
+            "isRepeat": false,
+            "mayRepeat": "N",
+            "valueSetCode": "",
+            "mappings": {
+              "hl7v251": {
+                "legacyIdentifier": "INV886",
+                "identifier": "77999-1",
+                "messageContext": "OBX segment with \nOBX-3.1=77999-1\nOBX-5=Text String",
+                "dataType": "TX",
+                "segmentType": "OBX",
+                "obrPosition": 1,
+                "fieldPosition": 5,
+                "componentPosition": -1,
+                "usage": "O",
+                "cardinality": "[0..1]",
+                "literalFieldValues": {},
+                "repeatingGroupElementType": "NO",
+                "implementationNotes": "Do not send personally identifiable information to CDC in this field.",
+                "sampleSegment": "OBX|36|TX|77999-1^Comment Field^LN||Comment to communicate something unusual about this case which is not already covered with other data elements||||||F"
+              }
+            },
+            "defaultValue": {
+              "value": "No comments at this time"
+            }
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "label": "Category",
+        "path": "$.category"
+      },
+      {
+        "label": "Data Element (DE) Name",
+        "path": "$.name"
+      },
+      {
+        "label": "DE Identifier Sent in HL7 Message",
+        "path": "$.mappings.hl7v251.identifier"
+      },
+      {
+        "label": "DE Code System",
+        "path": "$.codeSystem"
+      },
+      {
+        "label": "Data Element Description",
+        "path": "$.description"
+      },
+      {
+        "label": "Data Type",
+        "path": "$.dataType"
+      },
+      {
+        "label": "CDC Priority",
+        "path": "$.legacyPriority"
+      },
+      {
+        "label": "May Repeat",
+        "path": "$.mayRepeat"
+      },
+      {
+        "label": "Value Set Name (VADS Hyperlink)",
+        "path": "$.valueSetLink"
+      },
+      {
+        "label": "Value Set Code",
+        "path": "$.valueSetCode"
+      },
+      {
+        "label": "HL7 Message Context",
+        "path": "$.mappings.hl7v251.messageContext"
+      },
+      {
+        "label": "HL7 Data Type",
+        "path": "$.mappings.hl7v251.dataType"
+      },
+      {
+        "label": "HL7 Usage",
+        "path": "$.mappings.hl7v251.usage"
+      },
+      {
+        "label": "HL7 Cardinality",
+        "path": "$.mappings.hl7v251.cardinality"
+      },
+      {
+        "label": "HL7 Implementation Notes",
+        "path": "$.mappings.hl7v251.implementationNotes"
+      },
+      {
+        "label": "Repeating Group Element",
+        "path": "$.mappings.hl7v251.repeatingGroupElementType"
+      },
+      {
+        "label": "Sample Segment",
+        "path": "$.mappings.hl7v251.sampleSegment"
+      },
+      {
+        "label": "Comments",
+        "path": "$.comments"
+      }
+    ]
+  }
