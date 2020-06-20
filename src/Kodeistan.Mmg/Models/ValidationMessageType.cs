@@ -9,7 +9,7 @@ namespace Kodeistan.Mmg.Model
         Structural,
         Content,
         Vocabulary,
-        Rules,
+        Rule,
         Other
     }
 }

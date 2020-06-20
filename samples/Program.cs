@@ -14,7 +14,7 @@ namespace Kodeistan.Mmg.Samples
     {
         static void Main(string[] args)
         {
-            string fileName = "STD_V1_0_TM_TC01.txt";
+            string fileName = "PERT_V1_TM_TC01_Debug.txt";
             string hl7v2message = File.ReadAllText(Path.Combine("data", fileName));
 
             var sw = new System.Diagnostics.Stopwatch();

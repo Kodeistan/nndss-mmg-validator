@@ -147,6 +147,8 @@ namespace Kodeistan.Mmg
             // check for unique OBX-3 and OBX-4 values
             validationMessages.AddRange(ValidateOBXUniqueness(message));
 
+            validationMessages.AddRange(ValidateBusinessRules(message, messageMappingGuide));
+
             // check content
             foreach (var segment in segments)
             {
@@ -318,6 +320,351 @@ namespace Kodeistan.Mmg
             return validationMessages;
         }
 
+        private List<ValidationMessage> ValidateBusinessRules(Message message, MessageMappingGuide messageMappingGuide)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+            var pidSegment = message.Segments("PID").FirstOrDefault();
+            // TODO: Check that PID exists? This should have been checked elsewhere, but perhaps we should do that here too in case the function order changes?
+
+            var birthdateField = pidSegment.Fields(7);
+            var birthdate = ConvertHL7Timestamp(birthdateField.Value);
+
+            #region 00063 - Date of illness onset is NOT NULL and earlier than birthdate
+            var illnessOnsetSegment = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("11368-8") || s.Fields(3).Components(1).Value.Equals("INV137"))
+                .FirstOrDefault();
+
+            var illnessOnsetField = illnessOnsetSegment?.Fields(5);
+
+            if (illnessOnsetField != null && birthdateField != null && !string.IsNullOrEmpty(illnessOnsetField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var illnessOnset = ConvertHL7Timestamp(illnessOnsetField.Value);
+
+                if (illnessOnset < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV137 (Date of Illness Onset) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00063";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00064 - Date of illness end date occurs before date of illness onset
+            var illnessEndSegment = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77976-9") || s.Fields(3).Components(1).Value.Equals("INV138"))
+                .FirstOrDefault();
+
+            var illnessEndField = illnessEndSegment?.Fields(5);
+
+            if (illnessEndField != null && illnessOnsetField != null && !string.IsNullOrEmpty(illnessEndField.Value) && !string.IsNullOrEmpty(illnessOnsetField.Value))
+            {
+                var illnessOnset = ConvertHL7Timestamp(illnessOnsetField.Value);
+                var ilnessEnd = ConvertHL7Timestamp(illnessEndField.Value);
+
+                if (ilnessEnd < illnessOnset)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV138 (Illness End Date) is earlier than INV137 (Date of Illness Onset)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00064";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00065 - Date of illness onset is NOT NULL and earlier than birthdate
+            if (illnessEndField != null && birthdateField != null && !string.IsNullOrEmpty(illnessEndField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var illnessEnd = ConvertHL7Timestamp(illnessEndField.Value);
+
+                if (illnessEnd < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV138 (Illness End Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00065";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00067 - Pregnant Male business rule
+            var patientSex = pidSegment.Fields(8).Value;
+            var pregancyStatus = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77996-7"))
+                .FirstOrDefault();
+
+            if (pregancyStatus != null && pregancyStatus.Value.Equals("Y") && patientSex.Equals("M"))
+            {
+                var ruleViolationMessage = new ValidationMessage(
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Rule,
+                    content: $"77996-7 (Pregnancy Status) was addressed where DEM113 (Subject's Sex) is Male",
+                    path: $"");
+
+                ruleViolationMessage.ErrorCode = "00067";
+
+                validationMessages.Add(ruleViolationMessage);
+            }
+            #endregion
+
+            #region 00069 - Date of diagnosis is NOT NULL and occurs before birthdate
+            var diagnosisDateField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77975-1") || s.Fields(3).Components(1).Value.Equals("INV136"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (diagnosisDateField != null && birthdateField != null && !string.IsNullOrEmpty(diagnosisDateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var diagnosisDate = ConvertHL7Timestamp(diagnosisDateField.Value);
+
+                if (diagnosisDate < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV136 (Diagnosis Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00069";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00072 - Date of admission to hospital is NOT NULL and occurs before birthdate
+            var admissionDateField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("8656-1") || s.Fields(3).Components(1).Value.Equals("INV132"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (admissionDateField != null && birthdateField != null && !string.IsNullOrEmpty(admissionDateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var admissionDate = ConvertHL7Timestamp(admissionDateField.Value);
+
+                if (admissionDate < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV132 (Admission Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00072";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00073 - Date of discharge is NOT NULL and occurs before birthdate
+            var dischargeDateField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("8649-6") || s.Fields(3).Components(1).Value.Equals("INV133"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (dischargeDateField != null && birthdateField != null && !string.IsNullOrEmpty(dischargeDateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var dischargeDate = ConvertHL7Timestamp(dischargeDateField.Value);
+
+                if (dischargeDate < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV133 (Discharge Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00073";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00079 - Date of death is NOT NULL and occurs before birthdate
+            var deceasedDateField = pidSegment.Fields(29);
+
+            if (deceasedDateField != null && birthdateField != null && !string.IsNullOrEmpty(deceasedDateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var deceasedDate = ConvertHL7Timestamp(deceasedDateField.Value);
+
+                if (deceasedDate < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV146 (Deceased Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00079";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00101 - Earliest date reported to the county is NOT NULL and occurs before birthdate
+            var earliestDateReportedToCountyField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77972-8") || s.Fields(3).Components(1).Value.Equals("INV120"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (earliestDateReportedToCountyField != null && birthdateField != null && !string.IsNullOrEmpty(earliestDateReportedToCountyField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var earliestDateReportedToCounty = ConvertHL7Timestamp(earliestDateReportedToCountyField.Value);
+
+                if (earliestDateReportedToCounty < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV120 (Earliest Date Reported to County) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00101";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00102 - Earliest date reported to the state is NOT NULL and occurs before birthdate
+            var earliestDateReportedToStateField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77973-6") || s.Fields(3).Components(1).Value.Equals("INV121"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (earliestDateReportedToStateField != null && birthdateField != null && !string.IsNullOrEmpty(earliestDateReportedToStateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var earliestDateReportedToState = ConvertHL7Timestamp(earliestDateReportedToStateField.Value);
+
+                if (earliestDateReportedToState < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV121 (Earliest Date Reported to State) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00102";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00103 - MMWR week is valid
+            var mmwrWeekValue = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77991-8") || s.Fields(3).Components(1).Value.Equals("INV165"))
+                .FirstOrDefault()
+                ?.Fields(5)
+                ?.Components(2)
+                ?.Value;
+
+            if (!string.IsNullOrWhiteSpace(mmwrWeekValue) && int.TryParse(mmwrWeekValue, out int mmwrWeek) && (mmwrWeek < 1 || mmwrWeek > 53))
+            {   
+                var ruleViolationMessage = new ValidationMessage(
+                    severity: Severity.Error,
+                    messageType: ValidationMessageType.Rule,
+                    content: $"INV165 (MMWR Week) is not populated with an integar between 1 and 53.",
+                    path: $"");
+
+                ruleViolationMessage.ErrorCode = "00103";
+
+                validationMessages.Add(ruleViolationMessage);
+            }
+            #endregion
+
+            #region 00105 - Earliest date reported to the CDC is NOT NULL and occurs before birthdate
+            var earliestDateReportedToCDCField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77994-2") || s.Fields(3).Components(1).Value.Equals("INV176"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (earliestDateReportedToCDCField != null && birthdateField != null && !string.IsNullOrEmpty(earliestDateReportedToCDCField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var earliestDateReportedToCDC = ConvertHL7Timestamp(earliestDateReportedToCDCField.Value);
+
+                if (earliestDateReportedToCDC < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV176 (Date CDC was first verbally notified of this Case) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00105";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            #region 00106 - Earliest date reported to the PHD is NOT NULL and occurs before birthdate
+            var earliestDateReportedToPHDField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77970-2") || s.Fields(3).Components(1).Value.Equals("INV177"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (earliestDateReportedToPHDField != null && birthdateField != null && !string.IsNullOrEmpty(earliestDateReportedToPHDField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var earliestDateReportedToPHD = ConvertHL7Timestamp(earliestDateReportedToPHDField.Value);
+
+                if (earliestDateReportedToPHD < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV177 (Date First Reported PHD) on is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00106";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
+            return validationMessages;
+        }
+
+        public DateTime ConvertHL7DateTime(string hl7DateTime)
+        {
+            // TODO: Convert to static helper function?
+
+            string format = "yyyyMMdd";
+            DateTime dateTime = DateTime.ParseExact(hl7DateTime, format,
+                CultureInfo.InvariantCulture);
+            return dateTime;
+        }
+
+        public DateTimeOffset ConvertHL7Timestamp(string hl7Timestamp)
+        {
+            // TODO: Convert to static helper function?
+
+            string format = "yyyyMMddHHmmss.ffff".Substring(0, hl7Timestamp.Length);
+            DateTimeOffset dateTime = DateTimeOffset.ParseExact(hl7Timestamp, format,
+                CultureInfo.InvariantCulture);
+            return dateTime;
+        }
+
         private List<ValidationMessage> ValidateExtraneousOBXSegments(Message message, MessageMappingGuide messageMappingGuide)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -432,6 +779,20 @@ namespace Kodeistan.Mmg
                             messageType: ValidationMessageType.Content,
                             content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.2. Expected: {element.Name}. Actual: {obx32}.",
                             path: $"OBX[{segment.Fields(1).Value}].3.2",
+                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+
+                        validationMessages.Add(message);
+                    }
+
+                    if (element.CodeSystem.HasValue && !element.CodeSystem.Value.ToString().Equals(obx33, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Note: Added this check from OT's wishlist
+
+                        var message = new ValidationMessage(
+                            severity: Severity.Warning,
+                            messageType: ValidationMessageType.Content,
+                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.3. Expected: {element.CodeSystem.Value}. Actual: {obx33}.",
+                            path: $"OBX[{segment.Fields(1).Value}].3.3",
                             pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
 
                         validationMessages.Add(message);
