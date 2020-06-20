@@ -78,14 +78,21 @@ namespace Kodeistan.Mmg
 
                 return result;
             }
-            else if (mshSegment.GetAllFields().Count < 21 || string.IsNullOrEmpty(mshSegment.Fields(21).Value))
+            else if (
+                mshSegment.GetAllFields().Count < 21 || 
+                string.IsNullOrEmpty(mshSegment.Fields(21).Value) ||
+                !mshSegment.Fields(21).Repetitions(1).Value.Equals("NOTF_ORU_v3.0^PHINProfileID^2.16.840.1.114222.4.10.3^ISO") ||
+                !mshSegment.Fields(21).Repetitions(2).Value.Equals("Generic_MMG_V2.0^PHINMsgMapID^2.16.840.1.114222.4.10.4^ISO"))
             {
-                validationMessages.Add(
-                    new ValidationMessage(
+                var msh21error = new ValidationMessage(
                         Severity.Error,
                         ValidationMessageType.Structural,
-                        $"MSH segment contains no profile identifier",
-                        $"MSH[1].21"));
+                        $"An unsupported literal value was provided for the Message Profile Identifier (NOT115, MSH-21). Replace the unsupported literal value with the required literal value as defined in the conformance statement within the current version of the PHIN Messaging Guide for Case Notification Reporting and the appropriate Message Mapping Guide.",
+                        $"MSH[1].21");
+
+                msh21error.ErrorCode = "00025";
+
+                validationMessages.Add(msh21error);
 
                 result.ValidationMessages = validationMessages;
                 result.Elapsed = sw.Elapsed;
