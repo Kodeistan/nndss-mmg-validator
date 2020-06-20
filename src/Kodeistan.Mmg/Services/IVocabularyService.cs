@@ -6,6 +6,6 @@ namespace Kodeistan.Mmg.Services
 {
     public interface IVocabularyService
     {
-        bool IsConceptCodeValid(string conceptCode, string conceptName, string conceptCodeSystem, string valueSetCode);
+        VocabularyValidationResult IsValid(string conceptCode, string conceptName, string conceptCodeSystem, string valueSetCode);
     }
 }

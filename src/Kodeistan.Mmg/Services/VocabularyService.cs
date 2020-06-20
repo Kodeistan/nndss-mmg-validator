@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kodeistan.Mmg.Services
 {
-    public sealed class FakeVocabularyService : IVocabularyService
+    public sealed class InMemoryVocabularyService : IVocabularyService
     {
         private static List<Tuple<string, string, string>> YNU = new List<Tuple<string, string, string>>() {
             new Tuple<string, string, string>( "Y", "Yes", "CDC" ),
@@ -97,10 +97,10 @@ namespace Kodeistan.Mmg.Services
             new Tuple<string, string, string>( "418117003", "Water-borne transmission", "CDC" )
         };
 
-        public bool IsConceptCodeValid(string conceptCode, string conceptName, string conceptCodeSystem, string valueSetCode)
+        public VocabularyValidationResult IsValid(string conceptCode, string conceptName, string conceptCodeSystem, string valueSetCode)
         {
             List<Tuple<string, string, string>> valueSet = new List<Tuple<string, string, string>>();
-
+            
             if (valueSetCode.Equals("PHVS_YesNoUnknown_CDC"))
             {
                 valueSet = YNU;
@@ -139,20 +139,33 @@ namespace Kodeistan.Mmg.Services
             }
             else
             {
-                return true;
+                // if it's not in our in-memory list, just skip it for now and assume it's valid
+                return new VocabularyValidationResult(
+                    isCodeValid: true,
+                    isDescriptionValid: true,
+                    isSystemValid: true);
             }
 
-            bool found = false;
+            bool isCodeValid = false;
+            bool isDescriptionValid = false;
+
             foreach (var t in valueSet)
             {
                 if (t.Item1 == conceptCode)
                 {
-                    found = true;
+                    isCodeValid = true;
+                    if (t.Item2.Equals(conceptName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        isDescriptionValid = true;
+                    }
                     break;
                 }
             }
 
-            return found;
+            return new VocabularyValidationResult(
+                isCodeValid: isCodeValid, 
+                isDescriptionValid: isDescriptionValid, 
+                isSystemValid: true); // assume true for code system lookups until we can build an API
         }
     }
 }

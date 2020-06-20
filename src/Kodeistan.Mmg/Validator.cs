@@ -17,8 +17,8 @@ namespace Kodeistan.Mmg
 
         public Validator()
         {
-            _vocabService = new FakeVocabularyService();
-            _mmgService = new FileSystemMmgService();
+            _vocabService = new InMemoryVocabularyService();
+            _mmgService = new InMemoryMmgService();
         }
 
         public Validator(IVocabularyService vocabService, IMmgService mmgService)
@@ -374,9 +374,9 @@ namespace Kodeistan.Mmg
                                     conceptCode = field.Components(1).Value;
                                 }
 
-                                bool found = _vocabService.IsConceptCodeValid(conceptCode, "", "", relatedElement.ValueSetCode);
+                                var vocabularyResult = _vocabService.IsValid(conceptCode, "", "", relatedElement.ValueSetCode);
 
-                                if (!found)
+                                if (!vocabularyResult.IsCodeValid)
                                 {
                                     ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
                                         severity: Severity.Warning,
@@ -421,9 +421,9 @@ namespace Kodeistan.Mmg
                                 string conceptCode = repetition.Components(1).Value;
                                 string conceptName = repetition.Components(2).Value;
                                 string conceptCodeSystem = repetition.Components(3).Value;
-                                bool found = _vocabService.IsConceptCodeValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
+                                var vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
 
-                                if (!found)
+                                if (!vocabularyResult.IsCodeValid)
                                 {
                                     ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
                                         severity: Severity.Warning,
@@ -442,9 +442,9 @@ namespace Kodeistan.Mmg
                             string conceptCode = segment.Fields(5).Components(1).Value;
                             string conceptName = segment.Fields(5).Components(2).Value;
                             string conceptCodeSystem = segment.Fields(5).Components(3).Value;
-                            bool found = _vocabService.IsConceptCodeValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
+                            var vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
 
-                            if (!found)
+                            if (!vocabularyResult.IsCodeValid)
                             {
                                 ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
                                     severity: Severity.Warning,

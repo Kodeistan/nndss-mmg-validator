@@ -20,7 +20,7 @@ namespace Kodeistan.Mmg.Samples
             var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
-            IVocabularyService vocabService = new FakeVocabularyService();
+            IVocabularyService vocabService = new InMemoryVocabularyService();
             IMmgService mmgService = new InMemoryMmgService();
 
             Validator validator = new Validator(vocabService, mmgService);

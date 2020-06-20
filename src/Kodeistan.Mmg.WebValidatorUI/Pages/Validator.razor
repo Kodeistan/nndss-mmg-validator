@@ -77,7 +77,7 @@
 
 @code {
 
-    private readonly Kodeistan.Mmg.Validator _validator = new Kodeistan.Mmg.Validator(new Kodeistan.Mmg.Services.FakeVocabularyService(), new Kodeistan.Mmg.Services.InMemoryMmgService());
+    private readonly Kodeistan.Mmg.Validator _validator = new Kodeistan.Mmg.Validator(new Kodeistan.Mmg.Services.InMemoryVocabularyService(), new Kodeistan.Mmg.Services.InMemoryMmgService());
 
     private MessageForm messageFormResponse = new MessageForm();
     private Kodeistan.Mmg.Model.ValidationResult validationResult = new Model.ValidationResult();

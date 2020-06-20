@@ -18,7 +18,7 @@ namespace Kodeistan.Mmg.Tests
         private Validator BuildValidator()
         {
             IMmgService mmgService = new FileSystemMmgService();
-            IVocabularyService vocabService = new FakeVocabularyService();
+            IVocabularyService vocabService = new InMemoryVocabularyService();
 
             Validator validator = new Validator(
                 vocabService: vocabService,
