@@ -526,6 +526,31 @@ namespace Kodeistan.Mmg
             }
             #endregion
 
+            #region 00095 - Case investigation start date occurs before birthdate
+            var caseInvestigationStartDateField = message.Segments("OBX")
+                .Where(s => s.Fields(3).Components(1).Value.Equals("77979-3") || s.Fields(3).Components(1).Value.Equals("INV147"))
+                .FirstOrDefault()
+                ?.Fields(5);
+
+            if (caseInvestigationStartDateField != null && birthdateField != null && !string.IsNullOrEmpty(caseInvestigationStartDateField.Value) && !string.IsNullOrEmpty(birthdateField.Value))
+            {
+                var caseInvestigationStartDate = ConvertHL7Timestamp(caseInvestigationStartDateField.Value);
+
+                if (caseInvestigationStartDate < birthdate)
+                {
+                    var ruleViolationMessage = new ValidationMessage(
+                        severity: Severity.Warning,
+                        messageType: ValidationMessageType.Rule,
+                        content: $"INV147 (Case Investigation Start Date) is earlier than DEM115 (Patient Date of Birth)",
+                        path: $"");
+
+                    ruleViolationMessage.ErrorCode = "00095";
+
+                    validationMessages.Add(ruleViolationMessage);
+                }
+            }
+            #endregion
+
             #region 00101 - Earliest date reported to the county is NOT NULL and occurs before birthdate
             var earliestDateReportedToCountyField = message.Segments("OBX")
                 .Where(s => s.Fields(3).Components(1).Value.Equals("77972-8") || s.Fields(3).Components(1).Value.Equals("INV120"))

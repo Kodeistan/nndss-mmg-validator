@@ -23,7 +23,7 @@ The validator is implemented as a basic C# class and targets the .NET Standard 2
 In a scenario where the conversion is taking place in an AWS Lambda, Azure function, or ASP.NET Core microservice, the target runtime is likely to be Linux and thus .NET Core (or .NET 5) will be the target framework. To use this library in such a case, simply add the following to your `.csproj` file:
 
 ```xml
-<PackageReference Include="Kodeistan.Mmg" Version="0.0.2" />
+<PackageReference Include="Kodeistan.Mmg" Version="0.0.4" />
 ```
 
 The library can then be used like this:
