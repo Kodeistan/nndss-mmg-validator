@@ -759,6 +759,28 @@ namespace Kodeistan.Mmg
 
             int instance = 1;
 
+            string obx1 = segment.Fields(1).Value;
+            int fieldCount = segment.GetAllFields().Count;
+
+            #region 00035 - OBX-2 and OBX-11 check
+            string obx2 = segment.Fields(2).Value;
+            string obx11 = fieldCount >= 11 ? segment.Fields(11).Value : string.Empty;
+
+            if(obx11 != "X" && string.IsNullOrEmpty(obx2))
+            {
+                var validationErrorMessage = new ValidationMessage(
+                                severity: Severity.Error,
+                                messageType: ValidationMessageType.Structural,
+                                content: $"Retrieving data. Wait a few seconds and try to cut or copy again.",
+                                path: $"OBX[{obx1}].2",
+                                pathAlternate: $"OBX[{obx1}].11");
+
+                validationErrorMessage.ErrorCode = "00035";
+
+                validationMessages.Add(validationErrorMessage);
+            }
+            #endregion
+
             foreach (DataElement element in messageMappingGuide.Elements)
             {
                 var mapping = element.Mappings.Hl7v251;
@@ -784,8 +806,8 @@ namespace Kodeistan.Mmg
                             severity: Severity.Warning,
                             messageType: ValidationMessageType.Content,
                             content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.2. Expected: {element.Name}. Actual: {obx32}.",
-                            path: $"OBX[{segment.Fields(1).Value}].3.2",
-                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                            path: $"OBX[{obx1}].3.2",
+                            pathAlternate: $"OBX[{obx1}].3.1");
 
                         validationMessages.Add(message);
                     }
@@ -798,8 +820,8 @@ namespace Kodeistan.Mmg
                             severity: Severity.Warning,
                             messageType: ValidationMessageType.Content,
                             content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.3. Expected: {element.CodeSystem.Value}. Actual: {obx33}.",
-                            path: $"OBX[{segment.Fields(1).Value}].3.3",
-                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                            path: $"OBX[{obx1}].3.3",
+                            pathAlternate: $"OBX[{obx1}].3.1");
 
                         validationMessages.Add(message);
                     }
@@ -815,8 +837,8 @@ namespace Kodeistan.Mmg
                                 severity: Severity.Error,
                                 messageType: ValidationMessageType.Content,
                                 content: $"OBX-4 (Observation Sub-ID) MUST be populated for data elements in a repeating group. Data element '{element.Name}' with identifier '{mapping.Identifier}' is missing an OBX-4 value.",
-                                path: $"OBX[{segment.Fields(1).Value}].4",
-                                pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                                path: $"OBX[{obx1}].4",
+                                pathAlternate: $"OBX[{obx1}].3.1");
 
                             missingObx4Message.ErrorCode = "00007";
                             missingObx4Message.DataElementId = element.Id.ToString();
@@ -936,8 +958,8 @@ namespace Kodeistan.Mmg
                                         vocabularyResult,
                                         element,
                                         segment,
-                                        path: $"OBX[{segment.Fields(1).Value}].5[{i + 1}]",
-                                        pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                                        path: $"OBX[{obx1}].5[{i + 1}]",
+                                        pathAlternate: $"OBX[{obx1}].3.1");
 
                                     //new ValidationMessage(
                                     //severity: Severity.Warning,
@@ -964,8 +986,8 @@ namespace Kodeistan.Mmg
                                         vocabularyResult,
                                         element, 
                                         segment, 
-                                        path: $"OBX[{segment.Fields(1).Value}].5", 
-                                        pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                                        path: $"OBX[{obx1}].5", 
+                                        pathAlternate: $"OBX[{obx1}].3.1");
 
                                     //new ValidationMessage(
                                     //severity: Severity.Warning,
@@ -988,8 +1010,8 @@ namespace Kodeistan.Mmg
                                 severity: Severity.Error,
                                 messageType: ValidationMessageType.Content,
                                 content: $"{mapping.Identifier} ({element.Name}) is a required date data element and can’t be populated with '99999999'",
-                                path: $"OBX[{segment.Fields(1).Value}].5",
-                                pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+                                path: $"OBX[{obx1}].5",
+                                pathAlternate: $"OBX[{obx1}].3.1");
 
                             illegalDateValue.ErrorCode = "00008";
                             illegalDateValue.DataElementId = element.Id.ToString();
