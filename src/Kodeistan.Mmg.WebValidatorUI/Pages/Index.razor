@@ -84,11 +84,11 @@
 
                 var trClass = "table-danger";
 
-                if (message.Severity == Model.Severity.Error)
+                if (message.Severity == Severity.Error)
                 {
                     trClass = "table-danger";
                 }
-                else if (message.Severity == Model.Severity.Warning)
+                else if (message.Severity == Severity.Warning)
                 {
                     trClass = "table-warning";
                 }
@@ -96,12 +96,12 @@
             <tr class="@trClass">
                 <th scope="row">@(i+1)</th>
                 <td>
-                    @if (message.Severity == Model.Severity.Warning)
+                    @if (message.Severity == Severity.Warning)
                     {
                         <span class="oi oi-warning text-warning"></span>
                     }
 
-                    @if (message.Severity == Model.Severity.Error)
+                    @if (message.Severity == Severity.Error)
                     {
                         <span class="oi oi-circle-x text-danger"></span>
                     }
@@ -125,7 +125,7 @@
     private readonly Kodeistan.Mmg.Validator _validator = new Kodeistan.Mmg.Validator(new Kodeistan.Mmg.Services.InMemoryVocabularyService(), new Kodeistan.Mmg.Services.InMemoryMmgService());
 
     private MessageForm messageFormResponse = new MessageForm();
-    private Kodeistan.Mmg.Model.ValidationResult validationResult = new Model.ValidationResult();
+    private Kodeistan.Mmg.ValidationResult validationResult = new ValidationResult();
     private bool hasRun = false;
 
     private void Validate()

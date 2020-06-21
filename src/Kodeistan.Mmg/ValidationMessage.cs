@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Kodeistan.Mmg.Model
+namespace Kodeistan.Mmg
 {
     /// <summary>
     /// An error or warning generated during message validation

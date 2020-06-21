@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Kodeistan.Mmg.Model
+namespace Kodeistan.Mmg
 {
+    [DebuggerDisplay("{Profile} : {Errors} errors, {Warnings} : {Condition} msg from {NationalReportingJurisdiction} : {Elapsed.TotalMilliseconds} ms")]
     public sealed class ValidationResult
     {
         public List<ValidationMessage> ValidationMessages { get; set; } = new List<ValidationMessage>();

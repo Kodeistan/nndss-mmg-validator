@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kodeistan.Mmg.Model
+namespace Kodeistan.Mmg
 {
     public enum ValidationMessageType
     {

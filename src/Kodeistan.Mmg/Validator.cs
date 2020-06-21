@@ -199,12 +199,11 @@ namespace Kodeistan.Mmg
 
             HashSet<string> uniqueValues = new HashSet<string>();
 
-            bool notUnique = false;
             foreach (var segment in segments)
             {
                 if (segment.Name == "OBR")
                 {
-                    notUnique = false;
+                    uniqueValues.Clear();
                 }
                 
                 if (!segment.Name.Equals("OBX"))
