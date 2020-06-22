@@ -796,7 +796,7 @@ namespace Kodeistan.Mmg
                 var validationErrorMessage = new ValidationMessage(
                                 severity: Severity.Error,
                                 messageType: ValidationMessageType.Structural,
-                                content: $"Retrieving data. Wait a few seconds and try to cut or copy again.",
+                                content: $"If the eleventh component of an OBX segment (OBX-11, Observation Result Status) is not 'X', the second component of an OBX segment (OBX-2, Value Type) is conditionally required and must be populated. Please see the condition predicate on OBX-2 in the PHIN Messaging Guide for Case Notification Reporting for more information.",
                                 path: $"OBX[{obx1}].2",
                                 pathAlternate: $"OBX[{obx1}].11");
 
