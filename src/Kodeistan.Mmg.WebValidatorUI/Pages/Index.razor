@@ -71,7 +71,9 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Code</th>
                 <th scope="col">Severity</th>
+                <th scope="col">Type</th>
                 <th scope="col">Location 1</th>
                 <th scope="col">Location 2</th>
                 <th scope="col">Content</th>
@@ -95,20 +97,11 @@
 
             <tr class="@trClass">
                 <th scope="row">@(i+1)</th>
+                <td>@message.ErrorCode</td>
                 <td>
-                    @if (message.Severity == Severity.Warning)
-                    {
-                        <span class="oi oi-warning text-warning"></span>
-                    }
-
-                    @if (message.Severity == Severity.Error)
-                    {
-                        <span class="oi oi-circle-x text-danger"></span>
-                    }
-
                     @message.Severity
-
                 </td>
+                <td>@message.MessageType</td>
                 <td>@message.Path</td>
                 <td>@message.PathAlternate</td>
                 <td>@message.Content</td>

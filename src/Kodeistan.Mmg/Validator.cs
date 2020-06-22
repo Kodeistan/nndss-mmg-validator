@@ -166,6 +166,12 @@ namespace Kodeistan.Mmg
                         validationMessages.AddRange(obxValidationMessages);
                         break;
                     case "PID":
+                        var pidValidationMessages = ValidatePID(segment, messageMappingGuide);
+                        validationMessages.AddRange(pidValidationMessages);
+                        break;
+                    case "SPM":
+                        var spmValidationMessages = ValidateSPM(segment, messageMappingGuide);
+                        validationMessages.AddRange(spmValidationMessages);
                         break;
                 }
             }
@@ -1050,6 +1056,50 @@ namespace Kodeistan.Mmg
             }
 
             return validationMessages;
+        }
+
+        private List<ValidationMessage> ValidateSPM(Segment segment, MessageMappingGuide messageMappingGuide)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+            if (!segment.Name.Equals("SPM"))
+            {
+                // don't bother validating OBX segments if the segment isn't an OBX
+                return validationMessages;
+            }
+
+            int fieldCount = segment.GetAllFields().Count;
+
+            if (fieldCount < 13) return validationMessages;
+
+            string spm1 = segment.Fields(1).Value;
+            string spm11 = segment.Fields(11).Components(1).Value;
+            string spm13 = segment.Fields(13).Value;
+
+            #region 00036 - SPM-11 and SPM-13 check
+            
+            if (spm11 == "G" && string.IsNullOrEmpty(spm13))
+            {
+                var validationErrorMessage = new ValidationMessage(
+                                severity: Severity.Error,
+                                messageType: ValidationMessageType.Structural,
+                                content: $"Error Message: If the eleventh component of an SPM segment (SPM-11, Specimen Role) equals 'G', the thirteenth component of an SPM segment (SPM-13, Grouped Specimen Count) is conditionally required and must be populated. Please see the condition predicate on SPM-13 in the PHIN Messaging Guide for Case Notification Reporting for more information.",
+                                path: $"SPM[{spm1}].11",
+                                pathAlternate: $"SPM[{spm1}].13");
+
+                validationErrorMessage.ErrorCode = "00036";
+
+                validationMessages.Add(validationErrorMessage);
+            }
+            #endregion
+
+            return validationMessages;
+        }
+
+        private List<ValidationMessage> ValidatePID(Segment segment, MessageMappingGuide messageMappingGuide)
+        {
+            List<ValidationMessage> messages = new List<ValidationMessage>();
+            return messages;
         }
 
         private List<ValidationMessage> BuildInvalidVocabularyMessages(VocabularyValidationResult vocabularyResult, DataElement element, Segment segment, string path, string pathAlternate)
