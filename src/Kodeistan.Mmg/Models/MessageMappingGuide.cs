@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Kodeistan.Mmg.Model
@@ -117,12 +118,97 @@ namespace Kodeistan.Mmg.Model
         {
             get
             {
-                var elements = new List<DataElement>();
-                foreach(var block in Blocks)
+                
+
+                return _elements;
+            }
+        }
+
+        [JsonIgnore]
+        private Dictionary<Guid, List<DataElement>> RelatedElements
+        {
+            get
+            {
+                return _relatedElements;
+            }
+        }
+
+        public MessageMappingGuide() { }
+
+        [JsonConstructor]
+        public MessageMappingGuide(List<Block> blocks)
+        {
+            Blocks = blocks;
+
+            if (_elements.Count == 0)
+            {
+                List<DataElement> elements = new List<DataElement>(300);
+
+                foreach (var block in Blocks)
                 {
-                    elements.AddRange(block.Elements);
+                    foreach (var element in block.Elements)
+                    {
+                        elements.Add(element);
+
+                        if (!_relatedElements.ContainsKey(element.Id))
+                        {
+                            _relatedElements.Add(element.Id, new List<DataElement>());
+                        }
+                    }
+                    //elements.AddRange(block.Elements);
                 }
-                return elements;
+                _elements = elements;
+            }
+            
+            foreach (var element in _elements)
+            {
+                if (element.RelatedElementId.HasValue && _relatedElements.ContainsKey(element.RelatedElementId.Value))
+                {
+                    _relatedElements[element.RelatedElementId.Value].Add(element);
+                }
+            }
+
+            if (_elementIdentifierDictionary.Count == 0)
+            {
+                var elementIdentifierDictionary = new Dictionary<string, DataElement>(Elements.Count());
+
+                foreach (var element in Elements)
+                {
+                    var mapping = element.Mappings.Hl7v251;
+
+                    var id = mapping.Identifier;
+                    var legacyId = mapping.LegacyIdentifier;
+
+                    if (legacyId == "NOT115") continue;
+
+                    if (!id.StartsWith("N/A"))
+                    {
+                        elementIdentifierDictionary.Add(mapping.Identifier, element);
+                    }
+
+                    if (legacyId != id && !legacyId.StartsWith("N/A"))
+                    {
+                        elementIdentifierDictionary.Add(mapping.LegacyIdentifier, element);
+                    }
+                }
+                _elementIdentifierDictionary = elementIdentifierDictionary;
+            }
+        }
+
+        public List<DataElement> GetChildRelationships(DataElement element)
+        {
+            var children = RelatedElements[element.Id];
+            return children;
+        }
+
+        [JsonIgnore]
+        public Dictionary<string, DataElement> ElementIdentifierDictionary
+        {
+            get
+            {
+                
+
+                return _elementIdentifierDictionary;
             }
         }
 
@@ -167,6 +253,19 @@ namespace Kodeistan.Mmg.Model
         static public Guid GetGenV2Id()
         {
             return new Guid("88e35837-86b3-4166-ade9-ee4bc2b9bee3");
+        }
+
+        private List<DataElement> _elements = new List<DataElement>();
+        private Dictionary<string, DataElement> _elementIdentifierDictionary = new Dictionary<string, DataElement>();
+        private Dictionary<Guid, List<DataElement>> _relatedElements = new Dictionary<Guid, List<DataElement>>();
+
+        public bool TryGetElementByHl7Identifier(string identifier, out DataElement element)
+        {
+            if (ElementIdentifierDictionary.TryGetValue(identifier, out element))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

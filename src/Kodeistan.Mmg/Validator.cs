@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using HL7.Dotnetcore;
+using Kodeistan.HL7.Dotnetcore;
 using Kodeistan.Mmg.Model;
 using Kodeistan.Mmg.Model.HL7V251;
 using Kodeistan.Mmg.Services;
@@ -788,6 +788,7 @@ namespace Kodeistan.Mmg
                 return validationMessages;
             }
 
+
             int instance = 1;
 
             string obx1 = segment.Fields(1).Value;
@@ -812,248 +813,227 @@ namespace Kodeistan.Mmg
             }
             #endregion
 
-            foreach (DataElement element in messageMappingGuide.Elements)
+            string segmentIdentifier = segment.Fields(3).Components(1).Value;
+
+            DataElement element = null;
+            bool found = messageMappingGuide.TryGetElementByHl7Identifier(segmentIdentifier, out element);
+            if (!found) return validationMessages;
+
+            
+            var mapping = element.Mappings.Hl7v251;
+
+
+            #region Check the OBX-3 values to ensure they match what's in the MMG
+            // do a check to make sure the OBX-3.2 and OBX-3.3 values are correct
+            string obx32 = segment.Fields(3).Components(2).Value;
+            string obx33 = segment.Fields(3).Components(3).Value;
+
+            if (!element.Name.Equals(obx32, StringComparison.OrdinalIgnoreCase))
             {
-                var mapping = element.Mappings.Hl7v251;
+                var message = new ValidationMessage(
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Content,
+                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.2. Expected: {element.Name}. Actual: {obx32}.",
+                    path: $"OBX[{obx1}].3.2",
+                    pathAlternate: $"OBX[{obx1}].3.1");
 
-                if (mapping.SegmentType != SegmentType.OBX)
+                validationMessages.Add(message);
+            }
+
+            if (element.CodeSystem.HasValue && !element.CodeSystem.Value.ToString().Equals(obx33, StringComparison.OrdinalIgnoreCase))
+            {
+                // Note: Added this check from OT's wishlist
+
+                var message = new ValidationMessage(
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Content,
+                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.3. Expected: {element.CodeSystem.Value}. Actual: {obx33}.",
+                    path: $"OBX[{obx1}].3.3",
+                    pathAlternate: $"OBX[{obx1}].3.1");
+
+                validationMessages.Add(message);
+            }
+            #endregion
+
+            #region Check that repeating elements have values in OBX-4
+            if (mapping.RepeatingGroupElementType != RepeatingGroupElementType.No)
+            {
+                var obx4 = segment.Fields(4).Value;
+                if (string.IsNullOrWhiteSpace(obx4))
                 {
-                    continue;
-                }
+                    var missingObx4Message = new ValidationMessage(
+                        severity: Severity.Error,
+                        messageType: ValidationMessageType.Content,
+                        content: $"OBX-4 (Observation Sub-ID) MUST be populated for data elements in a repeating group. Data element '{element.Name}' with identifier '{mapping.Identifier}' is missing an OBX-4 value.",
+                        path: $"OBX[{obx1}].4",
+                        pathAlternate: $"OBX[{obx1}].3.1");
 
-                string segmentType = mapping.SegmentType.ToString();
-                string segmentIdentifier = segment.Fields(3).Components(1).Value;
+                    missingObx4Message.ErrorCode = "00007";
+                    missingObx4Message.DataElementId = element.Id.ToString();
 
-                if (mapping.Identifier == segmentIdentifier)
-                {
-                    #region Check the OBX-3 values to ensure they match what's in the MMG
-                    // do a check to make sure the OBX-3.2 and OBX-3.3 values are correct
-                    string obx32 = segment.Fields(3).Components(2).Value;
-                    string obx33 = segment.Fields(3).Components(3).Value;
-
-                    if (!element.Name.Equals(obx32, StringComparison.OrdinalIgnoreCase))
-                    {
-                        var message = new ValidationMessage(
-                            severity: Severity.Warning,
-                            messageType: ValidationMessageType.Content,
-                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.2. Expected: {element.Name}. Actual: {obx32}.",
-                            path: $"OBX[{obx1}].3.2",
-                            pathAlternate: $"OBX[{obx1}].3.1");
-
-                        validationMessages.Add(message);
-                    }
-
-                    if (element.CodeSystem.HasValue && !element.CodeSystem.Value.ToString().Equals(obx33, StringComparison.OrdinalIgnoreCase))
-                    {
-                        // Note: Added this check from OT's wishlist
-
-                        var message = new ValidationMessage(
-                            severity: Severity.Warning,
-                            messageType: ValidationMessageType.Content,
-                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has an unexpected value in OBX-3.3. Expected: {element.CodeSystem.Value}. Actual: {obx33}.",
-                            path: $"OBX[{obx1}].3.3",
-                            pathAlternate: $"OBX[{obx1}].3.1");
-
-                        validationMessages.Add(message);
-                    }
-                    #endregion
-
-                    #region Check that repeating elements have values in OBX-4
-                    if (mapping.RepeatingGroupElementType != RepeatingGroupElementType.No)
-                    {
-                        var obx4 = segment.Fields(4).Value;
-                        if (string.IsNullOrWhiteSpace(obx4))
-                        {
-                            var missingObx4Message = new ValidationMessage(
-                                severity: Severity.Error,
-                                messageType: ValidationMessageType.Content,
-                                content: $"OBX-4 (Observation Sub-ID) MUST be populated for data elements in a repeating group. Data element '{element.Name}' with identifier '{mapping.Identifier}' is missing an OBX-4 value.",
-                                path: $"OBX[{obx1}].4",
-                                pathAlternate: $"OBX[{obx1}].3.1");
-
-                            missingObx4Message.ErrorCode = "00007";
-                            missingObx4Message.DataElementId = element.Id.ToString();
-
-                            validationMessages.Add(missingObx4Message);
-                        }
-                    }
-                    #endregion
-
-
-                    // do a check for those rare instances of non-OBX-5 fields, and do the related lookup on them to get the related data element and not the root OBX data element
-                    List<DataElement> relatedElements = messageMappingGuide.Elements
-                        .Where(de => de.RelatedElementId == element.Id)
-                        .Where(de => de.Mappings.Hl7v251.FieldPosition.HasValue)
-                        .ToList();
-
-                    foreach (var relatedElement in relatedElements)
-                    {
-                        string lookup = relatedElement.Mappings.Hl7v251.SegmentType.ToString() + "-" + relatedElement.Mappings.Hl7v251.FieldPosition.Value.ToString();
-                        if (DATA_TYPE_LOOKUP.ContainsKey(lookup))
-                        {
-                            string datatype = DATA_TYPE_LOOKUP[lookup];
-                            var field = segment.Fields(relatedElement.Mappings.Hl7v251.FieldPosition.Value);
-
-                            if (datatype == "CE")
-                            {
-                                string conceptCode = field.Value;
-
-                                if (field.IsComponentized)
-                                {
-                                    conceptCode = field.Components(1).Value;
-                                }
-
-                                var vocabularyResult = _vocabService.IsValid(conceptCode, "", "", relatedElement.ValueSetCode);
-
-                                if (!vocabularyResult.IsCodeValid)
-                                {
-                                    List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
-                                        vocabularyResult,
-                                        relatedElement,
-                                        segment,
-                                        path: $"OBX[{segment.Fields(1).Value}].{relatedElement.Mappings.Hl7v251.FieldPosition.Value}",
-                                        pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                                    //ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
-                                    //    severity: Severity.Warning,
-                                    //    messageType: ValidationMessageType.Structural,
-                                    //    content: $"Data element '{relatedElement.Name}' in with identifier '{relatedElement.Mappings.Hl7v251.Identifier}' is a coded element associated with the value set '{relatedElement.ValueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
-                                    //    path: $"OBX[{segment.Fields(1).Value}].{relatedElement.Mappings.Hl7v251.FieldPosition.Value}",
-                                    //    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                                    validationMessages.AddRange(vocabularyMessages);
-                                }
-                            }
-                        }
-                    }
-
-                    var dataTypeValidationMessages = ValidateOBXDataType(segment, element);
-                    validationMessages.AddRange(dataTypeValidationMessages);
-
-                    var obx5 = segment.Fields(5);
-
-                    if (obx5.HasRepetitions && element.Repetitions.HasValue && element.Repetitions <= 1)
-                    {
-                        // element is defined as not repeating, but has repeats in a message
-                        ValidationMessage illegalRepeatsMessage = new ValidationMessage(
-                            severity: Severity.Warning,
-                            messageType: ValidationMessageType.Structural,
-                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is not a repeating element, but has repeating data in the message",
-                            path: $"OBX[{segment.Fields(1).Value}].5",
-                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                        illegalRepeatsMessage.ErrorCode = "0001";
-                        illegalRepeatsMessage.DataElementId = element.Id.ToString();
-
-                        validationMessages.Add(illegalRepeatsMessage);
-                    }
-                    else if (obx5.HasRepetitions && element.Repetitions.HasValue && obx5.Repetitions().Count > element.Repetitions)
-                    {
-                        var maxAllowedRepeats = element.Repetitions.Value;
-                        var actualRepeats = segment.Fields(5).Repetitions().Count.ToString();
-
-                        // element is repeating, but has too many repeats
-                        ValidationMessage illegalRepeatsMessage = new ValidationMessage(
-                            severity: Severity.Warning,
-                            messageType: ValidationMessageType.Structural,
-                            content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has too many repeats. Maximum allowed: {maxAllowedRepeats}. Actual: {actualRepeats}.",
-                            path: $"OBX[{segment.Fields(1).Value}].5",
-                            pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                        illegalRepeatsMessage.ErrorCode = "0002";
-                        illegalRepeatsMessage.DataElementId = element.Id.ToString();
-
-                        validationMessages.Add(illegalRepeatsMessage);
-                    }
-
-                    // check coded elements
-                    string dataType = segment.Fields(2).Value;
-                    if ( (dataType.Equals("CWE") && mapping.DataType == Model.HL7V251.DataType.CWE) || (dataType.Equals("CE") && mapping.DataType == Model.HL7V251.DataType.CE) )
-                    {
-                        string valueSetCode = element.ValueSetCode;
-
-                        if (obx5.HasRepetitions)
-                        {
-                            for (int i = 0; i < obx5.Repetitions().Count; i++)
-                            {
-                                var repetition = obx5.Repetitions()[i];
-                                
-                                string conceptCode = repetition.Components(1).Value;
-                                string conceptName = repetition.Components(2).Value;
-                                string conceptCodeSystem = repetition.Components(3).Value;
-                                var vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
-
-                                if (!vocabularyResult.IsCodeValid)
-                                {
-                                    List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
-                                        vocabularyResult,
-                                        element,
-                                        segment,
-                                        path: $"OBX[{obx1}].5[{i + 1}]",
-                                        pathAlternate: $"OBX[{obx1}].3.1");
-
-                                    //new ValidationMessage(
-                                    //severity: Severity.Warning,
-                                    //messageType: ValidationMessageType.Vocabulary,
-                                    //content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set in repetition {i + 1}",
-                                    //path: $"OBX[{segment.Fields(1).Value}].5[{i + 1}]",
-                                    //pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                                    validationMessages.AddRange(vocabularyMessages);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // it's a coded element, so check for vocabulary
-                            string conceptCode = segment.Fields(5).Components(1).Value;
-                            string conceptName = segment.Fields(5).Components(2).Value;
-                            string conceptCodeSystem = segment.Fields(5).Components(3).Value;
-                            var vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
-
-                            if (!vocabularyResult.IsCodeValid)
-                            {
-                                List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
-                                        vocabularyResult,
-                                        element, 
-                                        segment, 
-                                        path: $"OBX[{obx1}].5", 
-                                        pathAlternate: $"OBX[{obx1}].3.1");
-
-                                    //new ValidationMessage(
-                                    //severity: Severity.Warning,
-                                    //messageType: ValidationMessageType.Vocabulary,
-                                    //content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is a coded element associated with the value set '{valueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
-                                    //path: $"OBX[{segment.Fields(1).Value}].5",
-                                    //pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
-
-                                validationMessages.AddRange(vocabularyMessages);
-                            }
-                        }
-                    }
-
-                    // check date elements
-                    if (dataType.Equals("DT") || dataType.Equals("TS"))
-                    {
-                        if (obx5.Value.Equals("99999999"))
-                        {
-                            var illegalDateValue = new ValidationMessage(
-                                severity: Severity.Error,
-                                messageType: ValidationMessageType.Content,
-                                content: $"{mapping.Identifier} ({element.Name}) is a required date data element and can’t be populated with '99999999'",
-                                path: $"OBX[{obx1}].5",
-                                pathAlternate: $"OBX[{obx1}].3.1");
-
-                            illegalDateValue.ErrorCode = "00008";
-                            illegalDateValue.DataElementId = element.Id.ToString();
-
-                            validationMessages.Add(illegalDateValue);
-                        }
-                    }
-
-                    instance++; // TODO: Add instance number to the path string, e.g. if this OBX shows up multiple times (as it might with repeating groups)
+                    validationMessages.Add(missingObx4Message);
                 }
             }
+            #endregion
+
+
+            // do a check for those rare instances of non-OBX-5 fields, and do the related lookup on them to get the related data element and not the root OBX data element
+            List<DataElement> relatedElements = messageMappingGuide.GetChildRelationships(element); 
+
+            foreach (var relatedElement in relatedElements)
+            {
+                string lookup = relatedElement.Mappings.Hl7v251.SegmentType.ToString() + "-" + relatedElement.Mappings.Hl7v251.FieldPosition.Value.ToString();
+                if (DATA_TYPE_LOOKUP.ContainsKey(lookup))
+                {
+                    string datatype = DATA_TYPE_LOOKUP[lookup];
+                    var field = segment.Fields(relatedElement.Mappings.Hl7v251.FieldPosition.Value);
+
+                    if (datatype == "CE")
+                    {
+                        string conceptCode = field.Value;
+
+                        if (field.IsComponentized)
+                        {
+                            conceptCode = field.Components(1).Value;
+                        }
+
+                        var vocabularyResult = _vocabService.IsValid(conceptCode, "", "", relatedElement.ValueSetCode);
+
+                        if (!vocabularyResult.IsCodeValid)
+                        {
+                            List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
+                                vocabularyResult,
+                                relatedElement,
+                                segment,
+                                path: $"OBX[{segment.Fields(1).Value}].{relatedElement.Mappings.Hl7v251.FieldPosition.Value}",
+                                pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+
+                            //ValidationMessage illegalConceptCodeMessage = new ValidationMessage(
+                            //    severity: Severity.Warning,
+                            //    messageType: ValidationMessageType.Structural,
+                            //    content: $"Data element '{relatedElement.Name}' in with identifier '{relatedElement.Mappings.Hl7v251.Identifier}' is a coded element associated with the value set '{relatedElement.ValueSetCode}'. However, the concept code '{conceptCode}' in the message was not found as a valid concept for this value set",
+                            //    path: $"OBX[{segment.Fields(1).Value}].{relatedElement.Mappings.Hl7v251.FieldPosition.Value}",
+                            //    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+
+                            validationMessages.AddRange(vocabularyMessages);
+                        }
+                    }
+                }
+            }
+
+            var dataTypeValidationMessages = ValidateOBXDataType(segment, element);
+            validationMessages.AddRange(dataTypeValidationMessages);
+
+            var obx5 = segment.Fields(5);
+
+            if (obx5.HasRepetitions && element.Repetitions.HasValue && element.Repetitions <= 1)
+            {
+                // element is defined as not repeating, but has repeats in a message
+                ValidationMessage illegalRepeatsMessage = new ValidationMessage(
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Structural,
+                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' is not a repeating element, but has repeating data in the message",
+                    path: $"OBX[{segment.Fields(1).Value}].5",
+                    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+
+                illegalRepeatsMessage.ErrorCode = "0001";
+                illegalRepeatsMessage.DataElementId = element.Id.ToString();
+
+                validationMessages.Add(illegalRepeatsMessage);
+            }
+            else if (obx5.HasRepetitions && element.Repetitions.HasValue && obx5.Repetitions().Count > element.Repetitions)
+            {
+                var maxAllowedRepeats = element.Repetitions.Value;
+                var actualRepeats = segment.Fields(5).Repetitions().Count.ToString();
+
+                // element is repeating, but has too many repeats
+                ValidationMessage illegalRepeatsMessage = new ValidationMessage(
+                    severity: Severity.Warning,
+                    messageType: ValidationMessageType.Structural,
+                    content: $"Data element '{element.Name}' with identifier '{mapping.Identifier}' has too many repeats. Maximum allowed: {maxAllowedRepeats}. Actual: {actualRepeats}.",
+                    path: $"OBX[{segment.Fields(1).Value}].5",
+                    pathAlternate: $"OBX[{segment.Fields(1).Value}].3.1");
+
+                illegalRepeatsMessage.ErrorCode = "0002";
+                illegalRepeatsMessage.DataElementId = element.Id.ToString();
+
+                validationMessages.Add(illegalRepeatsMessage);
+            }
+
+            // check coded elements
+            string dataType = segment.Fields(2).Value;
+            if ( (dataType.Equals("CWE") && mapping.DataType == Model.HL7V251.DataType.CWE) || (dataType.Equals("CE") && mapping.DataType == Model.HL7V251.DataType.CE) )
+            {
+                string valueSetCode = element.ValueSetCode;
+
+                if (obx5.HasRepetitions)
+                {
+                    for (int i = 0; i < obx5.Repetitions().Count; i++)
+                    {
+                        var repetition = obx5.Repetitions()[i];
+                                
+                        string conceptCode = repetition.Components(1).Value;
+                        string conceptName = repetition.Components(2).Value;
+                        string conceptCodeSystem = repetition.Components(3).Value;
+                        var vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
+
+                        if (!vocabularyResult.IsCodeValid)
+                        {
+                            List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
+                                vocabularyResult,
+                                element,
+                                segment,
+                                path: $"OBX[{obx1}].5[{i + 1}]",
+                                pathAlternate: $"OBX[{obx1}].3.1");
+
+                            validationMessages.AddRange(vocabularyMessages);
+                        }
+                    }
+                }
+                else
+                {
+                    // it's a coded element, so check for vocabulary
+                    string conceptCode = segment.Fields(5).Components(1).Value;
+                    string conceptName = segment.Fields(5).Components(2).Value;
+                    string conceptCodeSystem = segment.Fields(5).Components(3).Value;
+                    VocabularyValidationResult vocabularyResult = _vocabService.IsValid(conceptCode, conceptName, conceptCodeSystem, valueSetCode);
+
+                    if (!vocabularyResult.IsCodeValid)
+                    {
+                        List<ValidationMessage> vocabularyMessages = BuildInvalidVocabularyMessages(
+                                vocabularyResult,
+                                element, 
+                                segment, 
+                                path: $"OBX[{obx1}].5", 
+                                pathAlternate: $"OBX[{obx1}].3.1");
+
+                        validationMessages.AddRange(vocabularyMessages);
+                    }
+                }
+            }
+
+            // check date elements
+            if (dataType.Equals("DT") || dataType.Equals("TS"))
+            {
+                // TODO on required fields
+
+                if (obx5.Value.Equals("99999999"))
+                {
+                    var illegalDateValue = new ValidationMessage(
+                        severity: Severity.Error,
+                        messageType: ValidationMessageType.Content,
+                        content: $"{mapping.Identifier} ({element.Name}) is a required date data element and can’t be populated with '99999999'",
+                        path: $"OBX[{obx1}].5",
+                        pathAlternate: $"OBX[{obx1}].3.1");
+
+                    illegalDateValue.ErrorCode = "00008";
+                    illegalDateValue.DataElementId = element.Id.ToString();
+
+                    validationMessages.Add(illegalDateValue);
+                }
+            }
+
+            instance++; // TODO: Add instance number to the path string, e.g. if this OBX shows up multiple times (as it might with repeating groups)
 
             return validationMessages;
         }
